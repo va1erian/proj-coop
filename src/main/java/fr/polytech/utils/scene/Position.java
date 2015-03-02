@@ -1,0 +1,49 @@
+/*
+ * Copyright (C) 2015 hadrien
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package fr.polytech.utils.scene;
+
+import com.hackoeur.jglm.Vec3;
+
+/**
+ *
+ * @author hadrien
+ */
+public class Position implements Positionnable {
+
+    private Vec3 pos = new Vec3();
+    private Vec3 dir = new Vec3(0, 1.0f, 0);
+    @Override
+    public Vec3 getPos() {
+        return pos;
+    }
+
+    @Override
+    public Vec3 getDir() {
+        return dir;
+    }
+
+    @Override
+    public void setPos(Vec3 pos) {
+        this.pos = pos;
+    }
+
+    @Override
+    public void setDir(Vec3 dir) {
+        this.dir = dir;
+    }
+    
+}

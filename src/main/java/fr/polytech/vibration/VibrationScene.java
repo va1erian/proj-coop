@@ -14,66 +14,44 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.dronegl;
+package fr.polytech.vibration;
 
-import fr.polytech.utils.scene.Actor;
 import com.hackoeur.jglm.Vec3;
 import fr.polytech.utils.model.BasicOBJLoader;
 import fr.polytech.utils.model.Model;
 import fr.polytech.utils.model.ModelLoader;
 import fr.polytech.utils.scene.AbstractScene;
-import fr.polytech.utils.scene.Prop;
-import java.util.Random;
+import fr.polytech.utils.scene.StaticProp;
 
 /**
  *
  * @author hadrien
  */
-public class DroneScene extends AbstractScene {
- 
-    private Actor drone;
+public class VibrationScene extends AbstractScene {
 
-    public DroneScene() {
+    private StaticProp staticPart;
+    private StaticProp movingPart;
+    
+    public VibrationScene() {
         light.setPos(new Vec3(0.0f, 4.0f, 0));
     }
     
     @Override
     public void initResources() throws Exception {
         ModelLoader loader = new BasicOBJLoader();
-        Model cube = loader.loadModel("/models/drone.obj");
         
-        drone = new Actor(cube);
-        props.add(drone);
+        Model m = loader.loadModel("/models/plaque_vibrante1.obj");
+        staticPart = new StaticProp(m);
+        props.add(staticPart);
         
-        addRandomProps(cube);
+        m = loader.loadModel("/models/plaque_vibrante2.obj");
+        movingPart = new StaticProp(m);
+        props.add(movingPart);
+        
     }
 
     @Override
     public void update(float dt) {
-        for(Prop p : props()) {
-            p.setPos(p.getPos().add(new Vec3(0.01f, 0.02f, 0)));
-        }        
     }
     
-    private void addRandomProps(Model mdl) {
-        Random rand = new Random();
-        
-        for(int i = 0; i < 30; i++) {
-            Actor d = new Actor(mdl);
-            Vec3 random = new Vec3(
-                    rand.nextFloat() - 0.5f,
-                    rand.nextFloat() - 0.5f,
-                    rand.nextFloat() - 0.5f).multiply(20.0f);
-            
-            d.setPos(random);
-            
-            random = new Vec3(
-                    rand.nextFloat() - 0.5f,
-                    rand.nextFloat() - 0.5f,
-                    rand.nextFloat() - 0.5f).multiply(20.0f);
-            
-            d.setDir(random);
-            props.add(d);
-        }
-    }
 }

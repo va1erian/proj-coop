@@ -29,9 +29,14 @@ public class BasicModel implements Model {
     private float[]  normals;
     private Vec3     color;
     
-    public BasicModel(float[] vertices, float[] normals, Vec3 color) {
+    public BasicModel(float[] vertices, float[] normals) {
         this.vertices = vertices;
         this.normals  = normals;
+    }
+    
+    public BasicModel(float[] vertices, float[] normals, Vec3 color) {
+        this.vertices = vertices;
+        this.normals  = normals; 
         this.color    = color;
     } 
     /**

@@ -24,9 +24,10 @@ import fr.polytech.utils.model.BasicModel;
  * @author Valerian
  */
 public class TerrainPlane extends BasicModel {
-    
-    public TerrainPlane() {
-        
+
+    public TerrainPlane(float[] vertices, float[] normals) {
+        super(vertices, normals);
     }
+
    
 }

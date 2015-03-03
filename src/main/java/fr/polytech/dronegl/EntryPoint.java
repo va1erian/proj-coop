@@ -20,7 +20,9 @@ import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.util.FPSAnimator;
+import fr.polytech.utils.scene.AbstractScene;
 import fr.polytech.utils.scene.SceneRenderer;
+import fr.polytech.vibration.VibrationScene;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
 
@@ -29,7 +31,7 @@ import javax.media.opengl.GLProfile;
  * @author hadrien
  */
 public class EntryPoint {     
-    private final static DroneScene scene = new DroneScene();
+    private final static AbstractScene scene = new DroneScene();
     private final static SceneRenderer view = new SceneRenderer(scene);
     
     public static void main(String[] args) {
@@ -42,6 +44,7 @@ public class EntryPoint {
         window.setTitle("GLdrone");
         
         window.addGLEventListener(view);
+        window.addKeyListener(view);
         
         FPSAnimator animator = new FPSAnimator(window, 60);
         animator.start();

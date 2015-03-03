@@ -16,36 +16,15 @@
  */
 package fr.polytech.utils.scene;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.polytech.utils.model.Model;
 
 /**
  *
  * @author hadrien
  */
-public abstract class AbstractScene {
+public class StaticProp extends Actor<Void> {
 
-    protected final Positionnable light = new Position();
-    protected final List<Prop> props  = new ArrayList<>();
-    
-    public abstract void initResources() throws Exception;
-    
-    public abstract void update(float dt);
-    
-    public AbstractScene() {
-        
+    public StaticProp(Model model) {
+        super(model);
     }
-    
-    public Iterable<Prop> props() {
-        return props;
-    }
-    
-    /**
-     * @return the light
-     */
-    public Positionnable getLight() {
-        return light;
-    }
-    
-    
 }

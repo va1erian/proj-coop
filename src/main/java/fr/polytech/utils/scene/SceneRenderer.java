@@ -19,6 +19,8 @@ package fr.polytech.utils.scene;
 import com.hackoeur.jglm.Mat4;
 import com.hackoeur.jglm.Matrices;
 import com.hackoeur.jglm.Vec3;
+import com.jogamp.newt.event.KeyEvent;
+import com.jogamp.newt.event.KeyListener;
 import fr.polytech.utils.model.Model;
 import glsl.GLSLProgramObject;
 import java.nio.IntBuffer;
@@ -33,8 +35,10 @@ import javax.media.opengl.GLEventListener;
  *
  * @author hadrien
  */
-public class SceneRenderer implements GLEventListener {
+public class SceneRenderer implements GLEventListener, KeyListener {
 
+    private float camX, camY, camZ, camDirX, camDirY, camDirZ;
+    
     private final AbstractScene scene;
     private final Map<Model, Integer> modelVertBuf   = new HashMap<>();
     private final Map<Model, Integer> modelNormalBuf = new HashMap<>();
@@ -46,6 +50,7 @@ public class SceneRenderer implements GLEventListener {
     
     public SceneRenderer(AbstractScene scene) {
         this.scene = scene;
+        
     }
     
     @Override
@@ -170,8 +175,8 @@ public class SceneRenderer implements GLEventListener {
     
     private Mat4 getViewMat() {
         return Matrices.lookAt(
-                scene.getCam().getPos(), 
-                scene.getCam().getDir(), 
+                new Vec3(-2.0f, -3.0f, 0), 
+                Vec3.VEC3_ZERO, 
                 new Vec3(0,1,0));
     }
     
@@ -189,6 +194,32 @@ public class SceneRenderer implements GLEventListener {
         gl3.glUniformMatrix4fv(matBufferId[0], 1, false, mvp.getBuffer());
         gl3.glUniformMatrix4fv(matBufferId[1], 1, false, view.getBuffer());
         gl3.glUniformMatrix4fv(matBufferId[2], 1, false, model.getBuffer());
+    }
+
+    @Override
+    public void keyPressed(KeyEvent ke) {
+       switch( ke.getKeyCode()) {
+           case KeyEvent.VK_UP:
+           camX += 4.0f;
+           break;
+           
+        case KeyEvent.VK_DOWN:
+           camX -= 4.0f;
+        break;
+            
+        case KeyEvent.VK_LEFT:
+           camX -= 4.0f;
+        break;
+            
+        case KeyEvent.VK_RIGHT:
+           camX += 4.0f;
+        break;
+       }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent ke) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
 

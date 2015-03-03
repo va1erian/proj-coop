@@ -16,36 +16,29 @@
  */
 package fr.polytech.utils.scene;
 
-import java.util.ArrayList;
-import java.util.List;
+import fr.polytech.utils.model.Model;
 
 /**
  *
  * @author hadrien
  */
-public abstract class AbstractScene {
+public class Actor<M> extends Position implements Prop, Thinker<M> {
 
-    protected final Positionnable light = new Position();
-    protected final List<Prop> props  = new ArrayList<>();
+    private final Model mdl;
     
-    public abstract void initResources() throws Exception;
+    public Actor(Model model) {
+        mdl = model;
+    }
     
-    public abstract void update(float dt);
-    
-    public AbstractScene() {
+
+    @Override
+    public Model getModel() {
+        return mdl;
+    }
+
+    @Override
+    public void think(float dt, M arg) {
         
     }
-    
-    public Iterable<Prop> props() {
-        return props;
-    }
-    
-    /**
-     * @return the light
-     */
-    public Positionnable getLight() {
-        return light;
-    }
-    
     
 }

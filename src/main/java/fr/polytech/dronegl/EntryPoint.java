@@ -29,8 +29,8 @@ import javax.media.opengl.GLProfile;
  * @author hadrien
  */
 public class EntryPoint {     
-    private static DroneScene scene = new DroneScene();
-    private static SceneRenderer view = new SceneRenderer(scene);
+    private final static DroneScene scene = new DroneScene();
+    private final static SceneRenderer view = new SceneRenderer(scene);
     
     public static void main(String[] args) {
         GLProfile glp = GLProfile.getDefault();

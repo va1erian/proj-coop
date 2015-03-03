@@ -54,9 +54,8 @@ public class BasicOBJLoader implements ModelLoader{
         }
         Path path = Paths.get(res);
         
-        Files.lines(path).forEachOrdered((String t) -> {
+        Files.lines(path).forEach((String t) -> {
             String[] tokens = t.trim().split(" ");
-            
             if(tokens.length < 2) {
                 return;
             }
@@ -75,22 +74,38 @@ public class BasicOBJLoader implements ModelLoader{
                 case "vn":
                 for(int i = 0; i < 3; i++)
                     tempNormals.add(Float.parseFloat(tokens[i + 1]));
-                break;
-                    
+                break;                                      
+            }            
+        });
+        
+        System.out.println("raw data loaded");
+        
+        Files.lines(path).forEach((String t) -> {
+           String[] tokens = t.trim().split(" ");
+           
+           if(tokens.length < 2) {
+               return;
+           }
+           
+           switch(tokens[0]) {
                 case "f":
                 for(int i = 0; i < 3; i++) {
-                    int[] vertex = splitTriplet(tokens[i + 1]);
+                    int[] vertex = splitTriplet(tokens[i + 1], true);
                     for(int j = 0; j < 3; j++) {
                         //Add 3 float per vectors. Also OBJ indices starts at 1
                         vertices.add(tempVertices.get((vertex[0] - 1) * 3 + j));
                         normals.add(tempNormals.get((vertex[2] -   1) * 3 + j));
                     }
-                    uvs.add(tempUvs.get((vertex[1] - 1) * 2));
-                    uvs.add(tempUvs.get((vertex[1] - 1) * 2 + 1));
+                    if(!tempUvs.isEmpty()) {
+                        //uvs.add(tempUvs.get((vertex[1] - 1) * 2));
+                        //uvs.add(tempUvs.get((vertex[1] - 1) * 2 + 1));
+                    }
                 }
                 break;
-            }            
+           }
         });
+        System.out.println("faces collected");
+
         BasicModel model = new BasicModel();
             
         model.setNormals(listToArray(normals));
@@ -99,12 +114,18 @@ public class BasicOBJLoader implements ModelLoader{
         return model;
     }
     
-    static private int[] splitTriplet(String t) {        
+    static private int[] splitTriplet(String t , boolean skipUv) {        
         int buf[] = new int[3];
         
         String[] tokens = t.split("/");
-        for(int i = 0; i < 3; i++) {
-            buf[i] = Integer.parseInt(tokens[i]);
+        
+        if(!skipUv) {
+            for(int i = 0; i < 3; i++) {
+                buf[i] = Integer.parseInt(tokens[i]);
+            }
+        } else {
+            buf[0] = Integer.parseInt(tokens[0]);
+            buf[2] = Integer.parseInt(tokens[2]); 
         }
         return buf;
     }

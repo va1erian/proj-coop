@@ -16,6 +16,7 @@
  */
 package fr.polytech.utils.model;
 
+import com.hackoeur.jglm.Vec3;
 import java.nio.FloatBuffer;
 
 /**
@@ -25,10 +26,14 @@ import java.nio.FloatBuffer;
 public class BasicModel implements Model {
 
     private float[]  vertices;
-    private float[]  uvs;
     private float[]  normals;
+    private Vec3     color;
     
-    
+    public BasicModel(float[] vertices, float[] normals, Vec3 color) {
+        this.vertices = vertices;
+        this.normals  = normals;
+        this.color    = color;
+    } 
     /**
      * Get the list of Vec3 vertices as a FloatBuffer
      * @return 
@@ -36,11 +41,6 @@ public class BasicModel implements Model {
     @Override
     public FloatBuffer getVertices() {
         return FloatBuffer.wrap(vertices);
-    }
-
-    @Override
-    public FloatBuffer getUVs() {
-        return FloatBuffer.wrap(uvs);
     }
 
     @Override
@@ -56,17 +56,15 @@ public class BasicModel implements Model {
     }
 
     /**
-     * @param uvs the uvs to set
-     */
-    public void setUvs(float[] uvs) {
-        this.uvs = uvs;
-    }
-
-    /**
      * @param normals the normals to set
      */
     public void setNormals(float[] normals) {
         this.normals = normals;
+    }
+
+    @Override
+    public Vec3 getColor() {
+        return color;
     }
 
 }

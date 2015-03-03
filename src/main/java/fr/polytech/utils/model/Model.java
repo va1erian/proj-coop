@@ -16,6 +16,7 @@
  */
 package fr.polytech.utils.model;
 
+import com.hackoeur.jglm.Vec3;
 import java.nio.FloatBuffer;
 
 /**
@@ -24,6 +25,6 @@ import java.nio.FloatBuffer;
  */
 public interface Model {
     FloatBuffer getVertices();
-    FloatBuffer getUVs();
     FloatBuffer getNormals();
+    Vec3        getColor();
 }

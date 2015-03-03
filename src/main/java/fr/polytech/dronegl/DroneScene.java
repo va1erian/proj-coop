@@ -41,7 +41,7 @@ public class DroneScene extends AbstractScene {
     @Override
     public void initResources() throws Exception {
         ModelLoader loader = new BasicOBJLoader();
-        Model cube = loader.loadModel("/models/suzanne.obj");
+        Model cube = loader.loadModel("/models/drone.obj");
         
         drone = new Drone(cube);
         props.add(drone);

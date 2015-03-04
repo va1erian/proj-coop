@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.utils.model;
+package fr.polytech.common.model;
 
 import com.hackoeur.jglm.Vec3;
 import java.nio.FloatBuffer;

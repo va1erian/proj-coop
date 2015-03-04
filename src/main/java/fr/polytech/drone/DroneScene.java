@@ -14,15 +14,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.dronegl;
+package fr.polytech.drone;
 
-import fr.polytech.utils.scene.Actor;
+import fr.polytech.common.scene.Actor;
 import com.hackoeur.jglm.Vec3;
-import fr.polytech.utils.model.BasicOBJLoader;
-import fr.polytech.utils.model.Model;
-import fr.polytech.utils.model.ModelLoader;
-import fr.polytech.utils.scene.AbstractScene;
-import fr.polytech.utils.scene.Prop;
+import fr.polytech.common.model.BasicOBJLoader;
+import fr.polytech.common.model.Model;
+import fr.polytech.common.model.ModelLoader;
+import fr.polytech.common.scene.AbstractScene;
+import fr.polytech.common.scene.Prop;
 import java.util.Random;
 
 /**
@@ -31,7 +31,7 @@ import java.util.Random;
  */
 public class DroneScene extends AbstractScene {
  
-    private Actor drone;
+    private Drone drone;
 
     public DroneScene() {
         light.setPos(new Vec3(0.0f, 4.0f, 0));
@@ -42,7 +42,7 @@ public class DroneScene extends AbstractScene {
         ModelLoader loader = new BasicOBJLoader();
         Model cube = loader.loadModel("/models/drone.obj");
         
-        drone = new Actor(cube);
+        drone = new Drone(cube);
         props.add(drone);
         
         addRandomProps(cube);
@@ -59,7 +59,7 @@ public class DroneScene extends AbstractScene {
         Random rand = new Random();
         
         for(int i = 0; i < 30; i++) {
-            Actor d = new Actor(mdl);
+            Actor d = new Drone(mdl);
             Vec3 random = new Vec3(
                     rand.nextFloat() - 0.5f,
                     rand.nextFloat() - 0.5f,

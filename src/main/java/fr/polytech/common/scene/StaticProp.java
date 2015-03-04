@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Valerian
+ * Copyright (C) 2015 hadrien
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,20 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package fr.polytech.common.scene;
 
-package fr.polytech.utils.terrain;
-
-import fr.polytech.utils.model.BasicModel;
+import fr.polytech.common.model.Model;
 
 /**
  *
- * @author Valerian
+ * @author hadrien
  */
-public class TerrainPlane extends BasicModel {
+public class StaticProp extends Actor {
 
-    public TerrainPlane(float[] vertices, float[] normals) {
-        super(vertices, normals);
+    public StaticProp(Model model) {
+        super(model);
     }
 
-   
+    @Override
+    public void think(float dt) {
+    }
+    
+    
 }

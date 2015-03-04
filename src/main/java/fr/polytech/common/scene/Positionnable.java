@@ -14,38 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.utils.scene;
+package fr.polytech.common.scene;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.hackoeur.jglm.Vec3;
 
 /**
  *
  * @author hadrien
  */
-public abstract class AbstractScene {
-
-    protected final Positionnable light = new Position();
-    protected final List<Prop> props  = new ArrayList<>();
-    
-    public abstract void initResources() throws Exception;
-    
-    public abstract void update(float dt);
-    
-    public AbstractScene() {
-        
-    }
-    
-    public Iterable<Prop> props() {
-        return props;
-    }
-    
-    /**
-     * @return the light
-     */
-    public Positionnable getLight() {
-        return light;
-    }
-    
-    
+public interface Positionnable {
+    Vec3 getPos();
+    Vec3 getDir();
+    void setPos(Vec3 pos);
+    void setDir(Vec3 dir);
 }

@@ -17,11 +17,11 @@
 package fr.polytech.vibration;
 
 import com.hackoeur.jglm.Vec3;
-import fr.polytech.utils.model.BasicOBJLoader;
-import fr.polytech.utils.model.Model;
-import fr.polytech.utils.model.ModelLoader;
-import fr.polytech.utils.scene.AbstractScene;
-import fr.polytech.utils.scene.StaticProp;
+import fr.polytech.common.model.BasicOBJLoader;
+import fr.polytech.common.model.Model;
+import fr.polytech.common.model.ModelLoader;
+import fr.polytech.common.scene.AbstractScene;
+import fr.polytech.common.scene.StaticProp;
 
 /**
  *

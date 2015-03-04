@@ -14,36 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.utils.scene;
-
-import com.hackoeur.jglm.Vec3;
+package fr.polytech.common.scene;
 
 /**
  *
  * @author hadrien
  */
-public class Position implements Positionnable {
-
-    private Vec3 pos = Vec3.VEC3_ZERO;
-    private Vec3 dir = new Vec3(0, 1.0f, 0);
-    @Override
-    public Vec3 getPos() {
-        return pos;
-    }
-
-    @Override
-    public Vec3 getDir() {
-        return dir;
-    }
-
-    @Override
-    public void setPos(Vec3 pos) {
-        this.pos = pos;
-    }
-
-    @Override
-    public void setDir(Vec3 dir) {
-        this.dir = dir;
-    }
-    
+public interface Thinker {
+    void think(float dt);
 }

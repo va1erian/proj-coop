@@ -14,31 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.utils.scene;
+package fr.polytech.common.model;
 
-import fr.polytech.utils.model.Model;
+import com.hackoeur.jglm.Vec3;
+import java.nio.FloatBuffer;
 
 /**
  *
  * @author hadrien
  */
-public class Actor<M> extends Position implements Prop, Thinker<M> {
-
-    private final Model mdl;
-    
-    public Actor(Model model) {
-        mdl = model;
-    }
-    
-
-    @Override
-    public Model getModel() {
-        return mdl;
-    }
-
-    @Override
-    public void think(float dt, M arg) {
-        
-    }
-    
+public interface Model {
+    FloatBuffer getVertices();
+    FloatBuffer getNormals();
+    Vec3        getColor();
 }

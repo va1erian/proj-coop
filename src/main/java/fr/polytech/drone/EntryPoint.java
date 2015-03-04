@@ -14,14 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.dronegl;
+package fr.polytech.drone;
 
 import com.jogamp.newt.event.WindowAdapter;
 import com.jogamp.newt.event.WindowEvent;
 import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.util.FPSAnimator;
-import fr.polytech.utils.scene.AbstractScene;
-import fr.polytech.utils.scene.SceneRenderer;
+import fr.polytech.common.scene.AbstractScene;
+import fr.polytech.common.scene.SceneManager;
 import fr.polytech.vibration.VibrationScene;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
@@ -32,7 +32,7 @@ import javax.media.opengl.GLProfile;
  */
 public class EntryPoint {     
     private final static AbstractScene scene = new VibrationScene();
-    private final static SceneRenderer view = new SceneRenderer(scene);
+    private final static SceneManager view = new SceneManager(scene);
     
     public static void main(String[] args) {
         GLProfile glp = GLProfile.getDefault();

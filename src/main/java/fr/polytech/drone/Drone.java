@@ -14,17 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.utils.scene;
+package fr.polytech.drone;
 
-import fr.polytech.utils.model.Model;
+import fr.polytech.common.model.Model;
+import fr.polytech.common.scene.Actor;
 
 /**
  *
  * @author hadrien
  */
-public class StaticProp extends Actor<Void> {
+public class Drone extends Actor {
 
-    public StaticProp(Model model) {
+    public Drone(Model model) {
         super(model);
     }
+
+    @Override
+    public void think(float dt) {
+        
+    }
+    
 }

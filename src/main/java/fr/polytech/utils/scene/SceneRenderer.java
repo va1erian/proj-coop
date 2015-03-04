@@ -50,7 +50,9 @@ public class SceneRenderer implements GLEventListener, KeyListener {
     
     public SceneRenderer(AbstractScene scene) {
         this.scene = scene;
-        
+        camX = 4.0f;
+        camY = 8.0f;
+        camZ = 8.0f;
     }
     
     @Override
@@ -202,19 +204,19 @@ public class SceneRenderer implements GLEventListener, KeyListener {
     public void keyPressed(KeyEvent ke) {
        switch( ke.getKeyCode()) {
            case KeyEvent.VK_UP:
-           camX += 2.0f;
+           camZ += 2.0f;
            break;
            
         case KeyEvent.VK_DOWN:
-           camX -= 2.0f;
-        break;
-            
-        case KeyEvent.VK_LEFT:
            camZ -= 2.0f;
         break;
             
+        case KeyEvent.VK_LEFT:
+           camX -= 2.0f;
+        break;
+            
         case KeyEvent.VK_RIGHT:
-           camZ += 2.0f;
+           camX += 2.0f;
         break;
             
         case KeyEvent.VK_PAGE_UP:

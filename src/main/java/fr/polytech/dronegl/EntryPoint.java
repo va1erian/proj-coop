@@ -31,7 +31,7 @@ import javax.media.opengl.GLProfile;
  * @author hadrien
  */
 public class EntryPoint {     
-    private final static AbstractScene scene = new DroneScene();
+    private final static AbstractScene scene = new VibrationScene();
     private final static SceneRenderer view = new SceneRenderer(scene);
     
     public static void main(String[] args) {

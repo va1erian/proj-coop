@@ -106,7 +106,7 @@ public class BasicOBJLoader implements ModelLoader{
         });
         System.out.println("faces collected");
 
-        BasicModel model = new BasicModel(listToArray(normals),listToArray(vertices));
+        BasicModel model = new BasicModel(listToArray(vertices),listToArray(normals));
             
         return model;
     }

@@ -174,10 +174,12 @@ public class SceneRenderer implements GLEventListener, KeyListener {
     }
     
     private Mat4 getViewMat() {
+        System.out.println("Cam " + camX + "," + camY + "," + camZ);
         return Matrices.lookAt(
-                new Vec3(-2.0f, -3.0f, 0), 
+                new Vec3(camX, camY, camZ), 
                 Vec3.VEC3_ZERO, 
                 new Vec3(0,1,0));
+        
     }
     
     private Mat4 getModelMat(Positionnable pos) {
@@ -200,19 +202,27 @@ public class SceneRenderer implements GLEventListener, KeyListener {
     public void keyPressed(KeyEvent ke) {
        switch( ke.getKeyCode()) {
            case KeyEvent.VK_UP:
-           camX += 4.0f;
+           camX += 2.0f;
            break;
            
         case KeyEvent.VK_DOWN:
-           camX -= 4.0f;
+           camX -= 2.0f;
         break;
             
         case KeyEvent.VK_LEFT:
-           camX -= 4.0f;
+           camZ -= 2.0f;
         break;
             
         case KeyEvent.VK_RIGHT:
-           camX += 4.0f;
+           camZ += 2.0f;
+        break;
+            
+        case KeyEvent.VK_PAGE_UP:
+            camY -= 2.0f;
+        break;
+            
+        case KeyEvent.VK_PAGE_DOWN:
+            camY += 2.0f;
         break;
        }
     }

@@ -33,7 +33,7 @@ public class VibrationScene extends AbstractScene {
     private StaticProp movingPart;
     
     public VibrationScene() {
-        light.setPos(new Vec3(0.0f, 4.0f, 0));
+        light.setPos(new Vec3(2.0f, 9.0f, 0));
     }
     
     @Override

@@ -25,7 +25,7 @@ import com.hackoeur.jglm.Vec3;
 public class Position implements Positionnable {
 
     private Vec3 pos = Vec3.VEC3_ZERO;
-    private Vec3 dir = new Vec3(0, 1.0f, 0);
+    private Vec3 dir = new Vec3(0, 0, 0);
     @Override
     public Vec3 getPos() {
         return pos;

@@ -23,7 +23,7 @@ import fr.polytech.common.scene.Actor;
 /**
  *
  * @author hadrien
- */
+ */ 
 public class VibratingPiece extends Actor {
     
     private double angle = 0;

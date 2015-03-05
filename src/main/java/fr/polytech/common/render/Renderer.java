@@ -39,7 +39,7 @@ public class Renderer {
     private final GL3 gl3;
     private final Map<Model, Integer> modelVertBuf   = new HashMap<>();
     private final Map<Model, Integer> modelNormalBuf = new HashMap<>();
-    private final Mat4 projection = Matrices.perspective(90.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
+    private final Mat4 projection = Matrices.perspective(65.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
     private final int[] matBufferId = new int[3];
     private final int[] lightBufferId = new int[1];
    
@@ -147,13 +147,18 @@ public class Renderer {
 
     
     private Mat4 getModelMat(Positionnable pos, Vec3 rotAxis) {
-        Mat4 rotMatrix = Matrices.rotate(pos.getDir().getX(), new Vec3( 0, 1, 0));
+        Mat4 rotXMatrix = Matrices.rotate(pos.getDir().getX(), new Vec3( 0, 1, 0));
+        Mat4 rotYMatrix = Matrices.rotate(pos.getDir().getY(), new Vec3( 1, 0, 0));
+        Mat4 rotZMatrix = Matrices.rotate(pos.getDir().getZ(), new Vec3( 0, 0, 1));
+
         //rotMatrix = rotMatrix.translate(rotAxis);
         
         return Mat4.MAT4_IDENTITY
                 .translate(pos.getPos())
                 .translate(rotAxis.getNegated())
-                .multiply(rotMatrix)
+                .multiply(rotXMatrix)
+                .multiply(rotZMatrix)
+                .multiply(rotYMatrix)
                 .translate(rotAxis);
                 
     }

@@ -63,6 +63,7 @@ public class SceneManager implements GLEventListener, KeyListener {
         } catch (Exception ex) {
             System.err.println("Failed to load scene resources");
             System.err.println(ex.getMessage());
+            ex.printStackTrace();
             System.exit(1);
         }
     }

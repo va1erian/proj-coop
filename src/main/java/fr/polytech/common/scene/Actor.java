@@ -16,6 +16,7 @@
  */
 package fr.polytech.common.scene;
 
+import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 
 /**
@@ -24,7 +25,8 @@ import fr.polytech.common.model.Model;
  */
 public abstract class Actor extends Position implements Prop, Thinker {
 
-    private final Model mdl;
+    protected final Model mdl;
+    protected Vec3  rotationCenter = Vec3.VEC3_ZERO;
     
     public Actor(Model model) {
         mdl = model;
@@ -33,6 +35,11 @@ public abstract class Actor extends Position implements Prop, Thinker {
     @Override
     public Model getModel() {
         return mdl;
+    }
+    
+    @Override
+    public Vec3 getRotationCenter() {
+        return rotationCenter;
     }
     
 }

@@ -16,6 +16,7 @@
  */
 package fr.polytech.common.scene;
 
+import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 
 /**
@@ -24,4 +25,5 @@ import fr.polytech.common.model.Model;
  */
 public interface Prop extends Positionnable {
     Model getModel();
+    Vec3  getRotationCenter();
 }

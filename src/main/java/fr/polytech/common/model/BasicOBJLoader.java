@@ -19,6 +19,7 @@ package fr.polytech.common.model;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,12 +44,13 @@ public class BasicOBJLoader implements ModelLoader{
         List<Float> tempNormals  = new ArrayList<>();
         
         List<Float> vertices = new ArrayList<>();
-        List<Float> uvs      = new ArrayList<>();
         List<Float> normals  = new ArrayList<>();
         
+        URL url;
         URI res;
         try {
-            res = getClass().getResource(name).toURI();
+            url = getClass().getResource(name);
+            res = url.toURI();
         } catch (URISyntaxException ex) {
             throw new ModelLoaderException("failed to open model", ex);
         }

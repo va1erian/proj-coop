@@ -16,6 +16,7 @@
  */
 package fr.polytech.vibration;
 
+import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.scene.Actor;
 
@@ -24,15 +25,22 @@ import fr.polytech.common.scene.Actor;
  * @author hadrien
  */
 public class VibratingPiece extends Actor {
-
-    float angle;
     
+    private double angle = 0;
+    private double counter = 0;
+
     public VibratingPiece(Model model) {
         super(model);
+        rotationCenter = new Vec3(-3.4f, 0, 0);
     }
 
     @Override
     public void think(float dt) {
+        counter += 25 * dt;
+        angle = Math.cos(counter) * 0.05;
+        
+        setDir(new Vec3((float) angle, 0, 0));
+        System.out.println(angle);
     }
     
 }

@@ -101,7 +101,7 @@ public class Renderer {
     }
     
     public void renderProp(AbstractScene scene, Prop p) {        
-        prepareMVP(gl3, p);
+        prepareMVP(gl3, p, p.getRotationCenter());
         
         Positionnable light = scene.getLight();
         gl3.glUniform3f(lightBufferId[0], 
@@ -127,7 +127,6 @@ public class Renderer {
     
     public void dispose() {
         basicShader.destroy(gl3);
-        
     }
     
     public void setView(Mat4 view) {
@@ -147,13 +146,20 @@ public class Renderer {
     }
 
     
-    private Mat4 getModelMat(Positionnable pos) {
+    private Mat4 getModelMat(Positionnable pos, Vec3 rotAxis) {
         Mat4 rotMatrix = Matrices.rotate(pos.getDir().getX(), new Vec3( 0, 1, 0));
-        return Mat4.MAT4_IDENTITY.translate(pos.getPos()).multiply(rotMatrix);
+        //rotMatrix = rotMatrix.translate(rotAxis);
+        
+        return Mat4.MAT4_IDENTITY
+                .translate(pos.getPos())
+                .translate(rotAxis.getNegated())
+                .multiply(rotMatrix)
+                .translate(rotAxis);
+                
     }
     
-    private void prepareMVP(GL3 gl3, Positionnable pos) {
-        Mat4 model = getModelMat(pos);
+    private void prepareMVP(GL3 gl3, Positionnable pos, Vec3 rotAxis) {
+        Mat4 model = getModelMat(pos, rotAxis);
         
         Mat4 mvp = projection.multiply(view.multiply(model));
         

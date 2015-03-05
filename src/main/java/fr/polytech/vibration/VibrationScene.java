@@ -30,7 +30,7 @@ import fr.polytech.common.scene.StaticProp;
 public class VibrationScene extends AbstractScene {
 
     private StaticProp staticPart;
-    private StaticProp movingPart;
+    private VibratingPiece movingPart;
     
     public VibrationScene() {
         light.setPos(new Vec3(2.0f, 9.0f, 0));
@@ -40,18 +40,19 @@ public class VibrationScene extends AbstractScene {
     public void initResources() throws Exception {
         ModelLoader loader = new BasicOBJLoader();
         
-        Model m = loader.loadModel("/models/plaque_vibrante1.obj");
+        Model m = loader.loadModel("/models/vibration1.obj");
         staticPart = new StaticProp(m);
         props.add(staticPart);
         
-        m = loader.loadModel("/models/plaque_vibrante2.obj");
-        movingPart = new StaticProp(m);
+        m = loader.loadModel("/models/vibration2.obj");
+        movingPart = new VibratingPiece(m);
         props.add(movingPart);
         
     }
 
     @Override
     public void update(float dt) {
+        movingPart.think(dt);
     }
     
 }

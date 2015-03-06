@@ -33,6 +33,10 @@ public interface ModelLoader {
         public ModelLoaderException(String message, Throwable cause) {
             super(message, cause);
         }
+        
+        public ModelLoaderException(String message) {
+            super(message);
+        }
     }    
     
     String getFileExtension();

@@ -22,7 +22,6 @@ import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.util.FPSAnimator;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.SceneManager;
-import fr.polytech.vibration.VibrationScene;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
 
@@ -31,8 +30,8 @@ import javax.media.opengl.GLProfile;
  * @author hadrien
  */
 public class EntryPoint {     
-    private final static AbstractScene scene = new VibrationScene();
-    private final static SceneManager view = new SceneManager(scene);
+    private final static AbstractScene scene = new DroneScene();
+    private final static SceneManager view   = new SceneManager(scene);
     
     public static void main(String[] args) {
         GLProfile glp = GLProfile.getDefault();
@@ -41,7 +40,7 @@ public class EntryPoint {
         GLWindow window = GLWindow.create(caps);
         window.setSize(800, 600);
         window.setVisible(true);
-        window.setTitle("GLdrone");
+        window.setTitle("GLdrone/GLvibration");
         
         window.addGLEventListener(view);
         window.addKeyListener(view);

@@ -16,6 +16,7 @@
  */
 package fr.polytech.common.scene;
 
+import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 
 /**
@@ -24,8 +25,8 @@ import fr.polytech.common.model.Model;
  */
 public class StaticProp extends Actor {
 
-    public StaticProp(Model model) {
-        super(model);
+    public StaticProp(Model model, Vec3 color) {
+        super(model, color);
     }
 
     @Override

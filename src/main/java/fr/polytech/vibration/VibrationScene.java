@@ -40,14 +40,13 @@ public class VibrationScene extends AbstractScene {
     public void initResources() throws Exception {
         ModelLoader loader = new BasicOBJLoader();
         
-        Model m = loader.loadModel("/models/vibration1.obj");
-        staticPart = new StaticProp(m);
+        Model m = loader.loadModel("/models/vib1.obj");
+        staticPart = new StaticProp(m, new Vec3(0.4f, 0.6f, 0.9f));
         props.add(staticPart);
         
-        m = loader.loadModel("/models/vibration2.obj");
+        m = loader.loadModel("/models/vib2.obj");
         movingPart = new VibratingPiece(m);
         props.add(movingPart);
-        
     }
 
     @Override

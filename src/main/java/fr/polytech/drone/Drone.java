@@ -16,22 +16,62 @@
  */
 package fr.polytech.drone;
 
+import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.scene.Actor;
+import fr.polytech.drivers.drone.DroneMessage;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  *
  * @author hadrien
  */
-public class Drone extends Actor {
+public class Drone extends Actor implements Observer {
 
+    final private Queue<DroneMessage> messageQueue = new ConcurrentLinkedQueue<>();
+    
+    private Vec3 momentum = Vec3.VEC3_ZERO;
+    
     public Drone(Model model) {
-        super(model);
+        super(model, new Vec3(0.4f, 0.6f, 0.9f));
     }
 
     @Override
     public void think(float dt) {
+        processMessage(messageQueue.poll());
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(arg instanceof DroneMessage) {
+            DroneMessage msg = (DroneMessage)arg;
+            messageQueue.add(msg);
+        }
+    }
+    
+    private void processMessage(DroneMessage msg) {
+        if(msg == null) return;
         
+        switch(msg.id) {
+            case ALTITUDE:
+                
+            break;
+                
+            case LACET:
+                
+            break;
+                
+            case ROULIS:
+            
+            break;
+                
+            case TANGAGE:
+            break;
+            
+        }
     }
     
 }

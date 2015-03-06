@@ -26,5 +26,4 @@ import java.nio.FloatBuffer;
 public interface Model {
     FloatBuffer getVertices();
     FloatBuffer getNormals();
-    Vec3        getColor();
 }

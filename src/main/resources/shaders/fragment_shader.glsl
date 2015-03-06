@@ -5,6 +5,7 @@ in vec3 normalCameraspace;
 in vec3 eyeDirCameraspace;
 in vec3 lightDirCameraspace;
 
+uniform vec3 diffuse;
 uniform vec3 lightPosWorldspace;
 
 out vec3 outputColor;
@@ -14,7 +15,7 @@ void main(){
     float lightPow = 50.0f;
 
    // Material properties
-    vec3 matDiffuseColor = vec3(0.4, 0.6, 0.9).rgb;
+    vec3 matDiffuseColor = diffuse.rgb;
     vec3 matAmbientColor = vec3(0.2,0.2,0.2) * matDiffuseColor;
     vec3 matSpecularColor = vec3(0.4,0.4,0.4);
 

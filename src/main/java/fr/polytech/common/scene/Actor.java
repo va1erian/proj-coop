@@ -27,9 +27,11 @@ public abstract class Actor extends Position implements Prop, Thinker {
 
     protected final Model mdl;
     protected Vec3  rotationCenter = Vec3.VEC3_ZERO;
+    protected Vec3 color;
     
-    public Actor(Model model) {
+    public Actor(Model model, Vec3 color) {
         mdl = model;
+        this.color = color;
     }
 
     @Override
@@ -41,5 +43,12 @@ public abstract class Actor extends Position implements Prop, Thinker {
     public Vec3 getRotationCenter() {
         return rotationCenter;
     }
+
+    @Override
+    public Vec3 getColor() {
+        return color;
+    }
+    
+    
     
 }

@@ -16,13 +16,12 @@
  */
 package fr.polytech.drone;
 
-import fr.polytech.common.scene.Actor;
 import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.BasicOBJLoader;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.model.ModelLoader;
 import fr.polytech.common.scene.AbstractScene;
-import fr.polytech.common.scene.Prop;
+import fr.polytech.common.scene.StaticProp;
 import java.util.Random;
 
 /**
@@ -40,26 +39,26 @@ public class DroneScene extends AbstractScene {
     @Override
     public void initResources() throws Exception {
         ModelLoader loader = new BasicOBJLoader();
-        Model cube = loader.loadModel("/models/drone.obj");
+        Model droneMdl = loader.loadModel("/models/drone.obj");
         
-        drone = new Drone(cube);
+        drone = new Drone(droneMdl);
         props.add(drone);
         
-        addRandomProps(cube);
+        Model cubeMdl = loader.loadModel("/models/cube2.obj");
+        addRandomProps(cubeMdl);
     }
 
     @Override
     public void update(float dt) {
-        for(Prop p : props()) {
-            p.setPos(p.getPos().add(new Vec3(0.01f, 0.02f, 0)));
-        }        
+        drone.think(dt);
     }
     
     private void addRandomProps(Model mdl) {
         Random rand = new Random();
         
-        for(int i = 0; i < 30; i++) {
-            Actor d = new Drone(mdl);
+        for(int i = 0; i < 100; i++) {
+            StaticProp d = new StaticProp(mdl, 
+                    new Vec3(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
             Vec3 random = new Vec3(
                     rand.nextFloat() - 0.5f,
                     rand.nextFloat() - 0.5f,

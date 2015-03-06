@@ -50,6 +50,9 @@ public class BasicOBJLoader implements ModelLoader{
         URI res;
         try {
             url = getClass().getResource(name);
+            if(url == null) {
+                throw new ModelLoaderException("No such model");
+            }
             res = url.toURI();
         } catch (URISyntaxException ex) {
             throw new ModelLoaderException("failed to open model", ex);

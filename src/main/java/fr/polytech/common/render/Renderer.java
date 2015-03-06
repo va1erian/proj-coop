@@ -42,7 +42,7 @@ public class Renderer {
     private final Mat4 projection = Matrices.perspective(65.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
     private final int[] matBufferId = new int[3];
     private final int[] lightBufferId = new int[1];
-   
+    private final int[] colorBufferId = new int[1];
     private GLSLProgramObject basicShader;
     private Mat4 view;
     
@@ -66,6 +66,7 @@ public class Renderer {
         matBufferId[1] = gl3.glGetUniformLocation(basicShader.getProgramId(), "V");
         matBufferId[2] = gl3.glGetUniformLocation(basicShader.getProgramId(), "M");
         lightBufferId[0] = gl3.glGetUniformLocation(basicShader.getProgramId(), "lightPosWorldspace");
+        colorBufferId[0] = gl3.glGetUniformLocation(basicShader.getProgramId(), "diffuse");
         System.out.println("model and resources loaded");
     };
     public void loadModel(Model mdl, GL3 gl3) {
@@ -104,9 +105,9 @@ public class Renderer {
         prepareMVP(gl3, p, p.getRotationCenter());
         
         Positionnable light = scene.getLight();
-        gl3.glUniform3f(lightBufferId[0], 
-                light.getPos().getX(), light.getPos().getY(), light.getPos().getZ());
+        gl3.glUniform3fv(lightBufferId[0], 1, light.getPos().getBuffer());
         
+        gl3.glUniform3fv(colorBufferId[0], 1, p.getColor().getBuffer());
         Model mdl = p.getModel();
         
         gl3.glEnableVertexAttribArray(0);

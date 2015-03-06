@@ -26,4 +26,5 @@ import fr.polytech.common.model.Model;
 public interface Prop extends Positionnable {
     Model getModel();
     Vec3  getRotationCenter();
+    Vec3  getColor();
 }

@@ -30,7 +30,7 @@ public class VibratingPiece extends Actor {
     private double counter = 0;
 
     public VibratingPiece(Model model) {
-        super(model);
+        super(model, new Vec3(0.9f, 0.3f, 0.5f));
         rotationCenter = new Vec3(-3.4f, 0, 0);
     }
 

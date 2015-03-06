@@ -6,17 +6,20 @@
 
 package fr.polytech.drivers;
 
+import java.util.Observable;
+import jssc.SerialPort;
+import jssc.SerialPortException;
+
 /**
  *
  * @author cedri_000
  */
-public abstract class Driver {
+public abstract class Driver extends Observable{
     
-    private byte buffer;
+    public static SerialPort serialPort;
     
-    public abstract boolean doConnect();
+    public abstract boolean doConnect(String port) throws SerialPortException;
     
-    public abstract void write();
-     
-    public abstract byte[] read();
+    public abstract void close() throws SerialPortException;
+
 }

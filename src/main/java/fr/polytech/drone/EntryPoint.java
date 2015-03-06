@@ -16,43 +16,102 @@
  */
 package fr.polytech.drone;
 
-import com.jogamp.newt.event.WindowAdapter;
-import com.jogamp.newt.event.WindowEvent;
-import com.jogamp.newt.opengl.GLWindow;
 import com.jogamp.opengl.util.FPSAnimator;
+import fr.polytech.common.gui.Dialogframe;
+import fr.polytech.common.gui.Mainframe;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.SceneManager;
+import fr.polytech.drivers.Driver;
+import fr.polytech.drivers.PlaqueVibranteDriver;
+import fr.polytech.drivers.drone.DroneDriver;
+import fr.polytech.vibration.VibrationScene;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLJPanel;
+import javax.swing.JFrame;
 
 /**
  *
  * @author hadrien
  */
 public class EntryPoint {     
-    private final static AbstractScene scene = new DroneScene();
-    private final static SceneManager view   = new SceneManager(scene);
+    private  static AbstractScene scene;
+    private static SceneManager view;
+    private static Driver driver;    
     
+    
+    /* GUI Frames */
+    private static JFrame mainframe;
+    private static Dialogframe dialog;
+    
+     public static enum Project {
+        DRONE,
+        PLAQUE_VIBRANTE,
+        NULL;
+    }
+    
+     
+     
     public static void main(String[] args) {
-        GLProfile glp = GLProfile.getDefault();
-        GLCapabilities caps = new GLCapabilities(glp);
-
-        GLWindow window = GLWindow.create(caps);
-        window.setSize(800, 600);
-        window.setVisible(true);
-        window.setTitle("GLdrone/GLvibration");
-        
-        window.addGLEventListener(view);
-        window.addKeyListener(view);
-        
-        FPSAnimator animator = new FPSAnimator(window, 60);
-        animator.start();
-        
-        window.addWindowListener( new WindowAdapter() {
-            @Override
-            public void windowDestroyNotify(WindowEvent we) {
-                System.exit(0);
-            }     
+       
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                mainframe = new Mainframe();
+                mainframe.setVisible(true);
+            }
         });
+         
+        
+    }
+    
+    /**
+     * 
+     * @param port
+     * @param project 
+     */
+    public static void displayProject(String port, Project project){
+        try{
+            scene = (project == Project.DRONE) ? new DroneScene() : new VibrationScene();
+            view = new SceneManager(scene);
+            
+            driver = (project == Project.DRONE)?
+                        new DroneDriver(port):new PlaqueVibranteDriver(port);
+            
+            mainframe.setVisible(false);
+            
+            GLProfile glp = GLProfile.getDefault();
+            GLCapabilities caps = new GLCapabilities(glp);
+
+            GLJPanel view3d = new GLJPanel(caps);
+            view3d.setSize(800, 600);
+            view3d.setVisible(true);
+            view3d.addGLEventListener(view);
+//            view3d.addKeyListener(view);
+            
+//            GLWindow window = GLWindow.create(caps);
+//            window.setSize(800, 600);
+//            window.setVisible(true);
+//            window.setTitle("GLdrone");
+//
+//            window.addGLEventListener(view);
+//            window.addKeyListener(view);
+
+            FPSAnimator animator = new FPSAnimator(view3d, 60);
+            animator.start();
+
+//            window.addWindowListener( new WindowAdapter() {
+//                @Override
+//                public void windowDestroyNotify(WindowEvent we) {
+//                    System.exit(0);
+//                }     
+//            });
+            
+            dialog = new Dialogframe();
+            dialog.setPnlView(view3d);
+            
+            
+        } catch (Exception e){
+            System.err.println("EntryPoint > displayProject > " +e.getMessage());
+        }
     }
 }

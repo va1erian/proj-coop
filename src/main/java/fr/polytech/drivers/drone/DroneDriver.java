@@ -6,22 +6,21 @@
 
 package fr.polytech.drivers.drone;
 
-import java.util.Observable;
+import fr.polytech.drivers.Driver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
+import jssc.SerialPortList;
 
 /**
  *
  * @author cedric
  */
-public class DroneDriver extends Observable{
+public class DroneDriver extends Driver{
    
-    //private Thread runningThread;
-    private SerialPort serialPort;
     
      /*
      * In this class must implement the method serialEvent, through it we learn about 
@@ -85,11 +84,11 @@ public class DroneDriver extends Observable{
     
     public static void main(String[] args) {
         try {
-            /*String[] portNames = SerialPortList.getPortNames();
+            String[] portNames = SerialPortList.getPortNames();
             for(int i = 0; i < portNames.length; i++){
             System.out.println(portNames[i]);
-            }*/
-            DroneDriver driver = new DroneDriver("COM6");
+            }
+            DroneDriver driver = new DroneDriver("COM5");
         } catch (SerialPortException ex) {
             Logger.getLogger(DroneDriver.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -97,34 +96,27 @@ public class DroneDriver extends Observable{
     
     
     public DroneDriver(String port) throws SerialPortException{
+        if (doConnect(port))
+        System.out.println("DroneDriver> Now connected to the device on port "+port);
+       else
+            System.err.println("DroneDriver> Fail to connect to the device on port"+port);
+    }
+    
+    @Override
+    public void close() throws SerialPortException{
+        serialPort.closePort();
+    }
+
+    @Override
+    public boolean doConnect(String port) throws SerialPortException {
         serialPort = new SerialPort(port);
         serialPort.openPort();//Open port
         serialPort.setParams(SerialPort.BAUDRATE_38400, 8, 1, 0);//Set params
         int mask = SerialPort.MASK_RXCHAR;//Prepare mask
         serialPort.setEventsMask(mask);//Set mask
         serialPort.addEventListener(portReader);//Add SerialPortEventListener
- 
         
-        
-        /* runningThread = new Thread("runningDroneThread"){
-            
-            @Override
-            public void run() {
-                byte[] buffer;
-                while(true){
-                    
-                    try {
-                        buffer = serialPort.readBytes(2);
-                    } catch (SerialPortException ex) {
-                        Logger.getLogger(DroneDriver.class.getName()).log(Level.SEVERE, "read bytes : Error", ex);
-                    }
-               }
-            }
-        }; */
-    }
-    
-    public void close() throws SerialPortException{
-        serialPort.closePort();
+        return true;
     }
     
     

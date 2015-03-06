@@ -68,6 +68,7 @@ public class EntryPoint {
                         try {
                             System.out.println("Windows closing...");
                             driver.close();
+                            System.out.println("ZOB");
                         } catch (SerialPortException ex) {
                             Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
                         }

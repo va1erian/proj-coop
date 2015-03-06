@@ -25,10 +25,15 @@ import fr.polytech.drivers.Driver;
 import fr.polytech.drivers.PlaqueVibranteDriver;
 import fr.polytech.drivers.drone.DroneDriver;
 import fr.polytech.vibration.VibrationScene;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
 import javax.media.opengl.awt.GLJPanel;
 import javax.swing.JFrame;
+import jssc.SerialPortException;
 
 /**
  *
@@ -58,6 +63,17 @@ public class EntryPoint {
             public void run() {
                 mainframe = new Mainframe();
                 mainframe.setVisible(true);
+                mainframe.addWindowListener(new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                        try {
+                            System.out.println("Windows closing...");
+                            driver.close();
+                        } catch (SerialPortException ex) {
+                            Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                
+                });
             }
         });
          
@@ -108,7 +124,17 @@ public class EntryPoint {
             
             dialog = new Dialogframe();
             dialog.setPnlView(view3d);
-            
+            dialog.addWindowListener(new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                        try {
+                            System.out.println("Windows closing...");
+                            driver.close();
+                        } catch (SerialPortException ex) {
+                            Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                
+                });
             
         } catch (Exception e){
             System.err.println("EntryPoint > displayProject > " +e.getMessage());

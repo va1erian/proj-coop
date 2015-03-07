@@ -20,7 +20,9 @@ import jssc.SerialPortList;
  */
 public class PlaqueVibranteDriver extends Driver{
    
-        
+    
+    //private Thread runningThread;
+    
     
     public PlaqueVibranteDriver(String port) throws SerialPortException{
        if (doConnect(port))
@@ -59,7 +61,7 @@ public class PlaqueVibranteDriver extends Driver{
         */
         int mask = SerialPort.MASK_RXCHAR;//Prepare mask
         serialPort.setEventsMask(mask);//Set mask
-        serialPort.addEventListener(new SerialPortReader());//Add SerialPortEventListener
+        serialPort.addEventListener(portReader);//Add SerialPortEventListener
         connected = true;
             
         return connected;
@@ -78,14 +80,14 @@ public class PlaqueVibranteDriver extends Driver{
      * those that we put in the mask. In this case the arrival of the data and change the 
      * status lines CTS and DSR
      */
-    static class SerialPortReader implements SerialPortEventListener {
+    private final SerialPortEventListener portReader = new SerialPortEventListener()  {
 
         public void serialEvent(SerialPortEvent event){
             try{
                byte buffer[] = serialPort.readBytes(1);
                // if (buffer[0] != 13)
                     System.out.println(String.format(" value ->%d" ,buffer[0] & 0xFF));
-               
+                    
             } catch(Exception e){
                 System.err.println(e.getMessage());
             }
@@ -96,6 +98,10 @@ public class PlaqueVibranteDriver extends Driver{
                     //Read data, if 4 bytes available 
                     try {
                         byte buffer[] = serialPort.readBytes(2);
+                        Byte msg = (byte)(buffer[0] & 0xFF);
+                        
+                        setChanged();
+                        notifyObservers(msg);
                     }
                     catch (SerialPortException ex) {
                         System.out.println(ex);
@@ -103,5 +109,5 @@ public class PlaqueVibranteDriver extends Driver{
                 }
             }
         }
-    }
+    };
 }

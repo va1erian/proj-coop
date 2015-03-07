@@ -21,7 +21,9 @@ import com.hackoeur.jglm.Mat4;
 import com.hackoeur.jglm.Matrices;
 import com.hackoeur.jglm.Vec3;
 import com.jogamp.newt.event.KeyEvent;
-import com.jogamp.newt.event.KeyListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import javax.media.opengl.GL3;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
@@ -30,12 +32,14 @@ import javax.media.opengl.GLEventListener;
  *
  * @author hadrien
  */
-public class SceneManager implements GLEventListener, KeyListener {
+public class SceneManager implements GLEventListener,  MouseMotionListener {
 
     private static final float CAM_MOVE_SPEED = 30.0f;
     
+    private int lastMouseX, lastMouseY;
+    
     private float camX, camY, camZ;
-    private float camSpeedX, camSpeedY, camSpeedZ;
+    private float theta, phi;
     
     private long lastTime = System.currentTimeMillis();
     
@@ -79,7 +83,6 @@ public class SceneManager implements GLEventListener, KeyListener {
         lastTime = currentTime;
         
         scene.update(elapsedTime);
-        updateCamPos(elapsedTime);
         
         renderer.setView(getViewMat());
         renderer.renderScene(scene);
@@ -91,19 +94,7 @@ public class SceneManager implements GLEventListener, KeyListener {
     public void reshape(GLAutoDrawable glad, int i, int i1, int i2, int i3) {
 
     }
-    
-
-    
-    private void updateCamPos(float dt) {
-        camX += camSpeedX * dt;
-        camY += camSpeedY * dt;
-        camZ += camSpeedZ * dt;
-        
-        camSpeedX *= 0.9 * dt;
-        camSpeedY *= 0.9 * dt;
-        camSpeedZ *= 0.9 * dt;
-
-    }
+   
     
     private Mat4 getViewMat() {
         return Matrices.lookAt(
@@ -113,37 +104,25 @@ public class SceneManager implements GLEventListener, KeyListener {
         
     }
     
+
     @Override
-    public void keyPressed(KeyEvent ke) {
-       switch( ke.getKeyCode()) {
-           case KeyEvent.VK_UP:
-           camSpeedZ = CAM_MOVE_SPEED;
-           break;
-           
-        case KeyEvent.VK_DOWN:
-           camSpeedZ = -CAM_MOVE_SPEED;
-        break;
-            
-        case KeyEvent.VK_LEFT:
-           camSpeedX = -CAM_MOVE_SPEED;
-        break;
-            
-        case KeyEvent.VK_RIGHT:
-           camSpeedX = +CAM_MOVE_SPEED;
-        break;
-            
-        case KeyEvent.VK_PAGE_UP:
-           camSpeedY = -CAM_MOVE_SPEED;
-        break;
-            
-        case KeyEvent.VK_PAGE_DOWN:
-           camSpeedZ = -CAM_MOVE_SPEED;
-        break;
-       }
+    public void mouseDragged(MouseEvent e) {
+        int mouseXDiff = e.getX() - lastMouseX;
+        int mouseYDiff = e.getY() - lastMouseY;
+        
+        theta += mouseXDiff * 0.005f;
+        phi   += mouseYDiff * 0.005f;
+        
+        camX = (float) (15.0f * Math.cos(phi) * Math.sin(theta));
+        camY = (float) (15.0f * Math.sin(phi) * Math.sin(theta));
+        camZ = (float) (15.0f * Math.cos(theta));
+        
+        lastMouseX = e.getX();
+        lastMouseY = e.getY();
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
+    public void mouseMoved(MouseEvent e) {
     }
 }
 

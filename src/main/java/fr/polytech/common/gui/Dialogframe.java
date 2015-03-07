@@ -16,11 +16,9 @@
  */
 package fr.polytech.common.gui;
 
-import com.jogamp.opengl.util.Animator;
 import com.jogamp.opengl.util.FPSAnimator;
 import fr.polytech.common.scene.SceneManager;
 import fr.polytech.drone.EntryPoint;
-import java.awt.Dimension;
 
 /**
  *
@@ -133,6 +131,7 @@ public class Dialogframe extends javax.swing.JDialog {
     public void initSceneManager(SceneManager manager){
         sceneView.addGLEventListener(manager);
         sceneView.setAnimator(animator);
+        sceneView.addMouseMotionListener(manager);
         animator.start();
     }
     

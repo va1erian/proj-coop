@@ -6,13 +6,10 @@
 
 package fr.polytech.drivers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
 import jssc.SerialPortException;
-import jssc.SerialPortList;
 
 /**
  *
@@ -24,27 +21,11 @@ public class PlaqueVibranteDriver extends Driver{
     //private Thread runningThread;
     
     
-    public PlaqueVibranteDriver(String port) throws SerialPortException{
-       if (doConnect(port))
-        System.out.println("PlaqueVibranteDriver> Now connected to the device on port "+port);
-       else
-            System.err.println("PlaqueVibranteDriver> Fail to connect to the device on port"+port);
+    public PlaqueVibranteDriver() throws SerialPortException{
+     
     }
 
     
-     public static void main(String[] args) {
-        try {
-            String[] portNames = SerialPortList.getPortNames();
-            for(int i = 0; i < portNames.length; i++){
-            System.out.println(portNames[i]);
-            }
-            
-            PlaqueVibranteDriver driver = new PlaqueVibranteDriver("COM4");
-        } catch (SerialPortException ex) {
-            Logger.getLogger(PlaqueVibranteDriver.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     @Override
     public boolean doConnect(String port) throws SerialPortException{
         boolean connected = false;
@@ -110,4 +91,9 @@ public class PlaqueVibranteDriver extends Driver{
             }
         }
     };
+    
+    @Override
+    public String toString(){
+        return "PlaqueVibrante ";
+    }
 }

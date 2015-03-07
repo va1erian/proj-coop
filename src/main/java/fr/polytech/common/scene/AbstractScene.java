@@ -18,25 +18,28 @@ package fr.polytech.common.scene;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  *
  * @author hadrien
  */
 public abstract class AbstractScene {
-
-    protected final Positionnable light = new Position();
+    
+    protected Observable eventSource;
+    
+    protected final Positionnable light   = new Position();
     protected final List<Object3D> props  = new ArrayList<>();
     
     public abstract void initResources() throws Exception;
     
     public abstract void update(float dt);
     
-    public AbstractScene() {
-        
+    public void setEventSource(Observable o) {
+        this.eventSource = o;
     }
     
-    public Iterable<Object3D> props() {
+    public Iterable<Object3D> objects() {
         return props;
     }
     

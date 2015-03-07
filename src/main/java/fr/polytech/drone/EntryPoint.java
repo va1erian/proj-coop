@@ -100,8 +100,10 @@ public class EntryPoint extends Observable{
 //            driver = (project == Project.DRONE)?
 //                        new DroneDriver():new PlaqueVibranteDriver();
             
-            driver = (project == Project.DRONE)?
+            driver = (project == Project.DRONE) ?
                         new TestDroneDriver():new TestPlaqueVibranteDriver();
+            
+            scene.setEventSource(driver);
             
             if (driver.doConnect(port))
                 System.out.println(driver+"> Now connected to the device on port "+port);
@@ -136,6 +138,7 @@ public class EntryPoint extends Observable{
             
         } catch (Exception e){
             System.err.println("EntryPoint > displayProject > " +e.getMessage());
+            e.printStackTrace();
         }
     }
     

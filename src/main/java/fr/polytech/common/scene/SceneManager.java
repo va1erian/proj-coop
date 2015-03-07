@@ -63,13 +63,13 @@ public class SceneManager implements GLEventListener, KeyListener {
         } catch (Exception ex) {
             System.err.println("Failed to load scene resources");
             System.err.println(ex.getMessage());
-            ex.printStackTrace();
             System.exit(1);
         }
     }
 
     @Override
     public void dispose(GLAutoDrawable glad) {
+        
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SceneManager implements GLEventListener, KeyListener {
         
         glad.swapBuffers();
     }
-
+    
     @Override
     public void reshape(GLAutoDrawable glad, int i, int i1, int i2, int i3) {
 

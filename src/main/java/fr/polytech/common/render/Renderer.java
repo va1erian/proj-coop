@@ -57,7 +57,7 @@ public class Renderer {
     public void loadSceneResources(AbstractScene scene) throws Exception {
         buildShaders();
         
-        for(Object3D p : scene.props() ) {
+        for(Object3D p : scene.objects() ) {
             if(!isModelLoaded(p.getModel())) {
                 loadModel(p.getModel(), gl3);
             }
@@ -94,7 +94,7 @@ public class Renderer {
 
         basicShader.bind(gl3);
                 
-        for(Object3D p : scene.props()) {
+        for(Object3D p : scene.objects()) {
             renderProp(scene, p);
         }
         

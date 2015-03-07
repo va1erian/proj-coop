@@ -46,6 +46,7 @@ public class VibrationScene extends AbstractScene {
         
         m = loader.loadModel("/models/vib2.obj");
         movingPart = new VibratingPiece(m);
+        eventSource.addObserver(movingPart);
         props.add(movingPart);
     }
 

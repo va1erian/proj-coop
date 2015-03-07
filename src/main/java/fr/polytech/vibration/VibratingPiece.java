@@ -19,12 +19,14 @@ package fr.polytech.vibration;
 import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.scene.Actor;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author hadrien
  */ 
-public class VibratingPiece extends Actor {
+public class VibratingPiece extends Actor implements Observer{
     
     private double angle = 0;
     private double counter = 0;
@@ -40,6 +42,10 @@ public class VibratingPiece extends Actor {
         angle = Math.cos(counter) * 0.08;
         
         setDir(new Vec3((float) angle, 0, 0));
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
     }
     
 }

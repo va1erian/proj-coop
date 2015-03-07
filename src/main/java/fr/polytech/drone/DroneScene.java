@@ -22,6 +22,7 @@ import fr.polytech.common.model.Model;
 import fr.polytech.common.model.ModelLoader;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.StaticProp;
+import java.util.Observable;
 import java.util.Random;
 
 /**
@@ -42,6 +43,7 @@ public class DroneScene extends AbstractScene {
         Model droneMdl = loader.loadModel("/models/drone.obj");
         
         drone = new Drone(droneMdl);
+        eventSource.addObserver(drone);
         props.add(drone);
         
         Model cubeMdl = loader.loadModel("/models/cube2.obj");

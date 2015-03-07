@@ -27,6 +27,7 @@ import fr.polytech.drivers.drone.DroneDriver;
 import fr.polytech.vibration.VibrationScene;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.media.opengl.GLCapabilities;
@@ -39,7 +40,7 @@ import jssc.SerialPortException;
  *
  * @author hadrien
  */
-public class EntryPoint {     
+public class EntryPoint extends Observable{     
     private  static AbstractScene scene;
     private static SceneManager view;
     private static Driver driver;    
@@ -68,11 +69,15 @@ public class EntryPoint {
                         try {
                             System.out.println("Windows closing...");
                             driver.close();
-                            System.out.println("ZOB");
+                            System.exit(0);
                         } catch (SerialPortException ex) {
                             Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
+                    
+                    public void windowDestroyNotify(WindowEvent we) {
+                        System.exit(0);
+                    }  
                 
                 });
             }
@@ -100,45 +105,39 @@ public class EntryPoint {
             GLCapabilities caps = new GLCapabilities(glp);
 
             GLJPanel view3d = new GLJPanel(caps);
-            view3d.setSize(800, 600);
+            
+            
             view3d.setVisible(true);
             view3d.addGLEventListener(view);
-//            view3d.addKeyListener(view);
-            
-//            GLWindow window = GLWindow.create(caps);
-//            window.setSize(800, 600);
-//            window.setVisible(true);
-//            window.setTitle("GLdrone");
-//
-//            window.addGLEventListener(view);
-//            window.addKeyListener(view);
-
             FPSAnimator animator = new FPSAnimator(view3d, 60);
             animator.start();
-
-//            window.addWindowListener( new WindowAdapter() {
-//                @Override
-//                public void windowDestroyNotify(WindowEvent we) {
-//                    System.exit(0);
-//                }     
-//            });
             
             dialog = new Dialogframe();
             dialog.setPnlView(view3d);
+            view3d.setSize(dialog.get3DviewDimension());
             dialog.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
                         try {
                             System.out.println("Windows closing...");
                             driver.close();
+                            System.exit(0);
                         } catch (SerialPortException ex) {
                             Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 
+                    public void windowDestroyNotify(WindowEvent we) {
+                        System.exit(0);
+                    }  
                 });
             
         } catch (Exception e){
             System.err.println("EntryPoint > displayProject > " +e.getMessage());
         }
     }
+    
+    
+    
+
+   
 }

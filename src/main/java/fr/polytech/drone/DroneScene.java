@@ -61,8 +61,8 @@ public class DroneScene extends AbstractScene {
                     new Vec3(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
             Vec3 random = new Vec3(
                     rand.nextFloat() - 0.5f,
-                    rand.nextFloat() - 0.5f,
-                    rand.nextFloat() - 0.5f).multiply(20.0f);
+                    - 0.2f,
+                    rand.nextFloat() - 0.5f).multiply(75.0f);
             
             d.setPos(random);
             

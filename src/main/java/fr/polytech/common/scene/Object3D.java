@@ -23,7 +23,7 @@ import fr.polytech.common.model.Model;
  *
  * @author hadrien
  */
-public interface Prop extends Positionnable {
+public interface Object3D extends Positionnable {
     Model getModel();
     Vec3  getRotationCenter();
     Vec3  getColor();

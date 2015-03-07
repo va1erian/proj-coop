@@ -22,7 +22,7 @@ import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.Positionnable;
-import fr.polytech.common.scene.Prop;
+import fr.polytech.common.scene.Object3D;
 import glsl.GLSLProgramObject;
 import java.nio.IntBuffer;
 import java.util.HashMap;
@@ -57,7 +57,7 @@ public class Renderer {
     public void loadSceneResources(AbstractScene scene) throws Exception {
         buildShaders();
         
-        for(Prop p : scene.props() ) {
+        for(Object3D p : scene.props() ) {
             if(!isModelLoaded(p.getModel())) {
                 loadModel(p.getModel(), gl3);
             }
@@ -94,14 +94,14 @@ public class Renderer {
 
         basicShader.bind(gl3);
                 
-        for(Prop p : scene.props()) {
+        for(Object3D p : scene.props()) {
             renderProp(scene, p);
         }
         
         basicShader.unbind(gl3);
     }
     
-    public void renderProp(AbstractScene scene, Prop p) {        
+    public void renderProp(AbstractScene scene, Object3D p) {        
         prepareMVP(gl3, p, p.getRotationCenter());
         
         Positionnable light = scene.getLight();

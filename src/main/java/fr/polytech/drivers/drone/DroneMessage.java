@@ -23,16 +23,11 @@ package fr.polytech.drivers.drone;
 public class DroneMessage {
     
     public enum Type{
-        LACET((byte) 1),
-        TANGAGE((byte) 2),
-        ALTITUDE((byte) 3),
-        ROULIS((byte) 4);
-        
-        private byte byteValue = 0;
-        
-        Type(byte byteValue){
-            this.byteValue = byteValue;
-        }
+        LACET,
+        TANGAGE,
+        ALTITUDE,
+        ROULIS;
+                
         
         public static Type fromByte(byte value){
             switch(value){

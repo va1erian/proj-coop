@@ -23,7 +23,7 @@ import fr.polytech.common.model.Model;
  *
  * @author hadrien
  */
-public abstract class Actor extends Position implements Prop, Thinker {
+public abstract class Actor extends Position implements Object3D, Thinker {
 
     protected final Model mdl;
     protected Vec3  rotationCenter = Vec3.VEC3_ZERO;

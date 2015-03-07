@@ -38,7 +38,7 @@ public class DroneDriver extends Driver{
             try{
                byte buffer[] = serialPort.readBytes(2);
                if (buffer[0] != 13)
-                    System.out.println(String.format("%c   %c" ,buffer[0] & 0xFF, buffer[1] & 0xFF));
+                    System.out.println(String.format("%c %c" ,buffer[0] & 0xFF, buffer[1] & 0xFF));
                
             } catch(Exception e){
                 System.err.println(e.getMessage());
@@ -52,25 +52,6 @@ public class DroneDriver extends Driver{
                         DroneMessage msg = new DroneMessage(buffer);
                         
                         notifyObservers(msg);
-                        
-                        switch(msg.id){
-                            case LACET:
-                                
-                            break;
-                                
-                            case TANGAGE:
-                            break;
-                                
-                            case ALTITUDE:
-                            break;
-                                
-                            case ROULIS:
-                            break;
-                                
-                            default:
-                            break;
-                        }
-                        
                     }
                     catch (SerialPortException ex) {
                         System.out.println(ex);

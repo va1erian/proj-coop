@@ -20,9 +20,7 @@ import jssc.SerialPortList;
  */
 public class PlaqueVibranteDriver extends Driver{
    
-    
-    //private Thread runningThread;
-    
+        
     
     public PlaqueVibranteDriver(String port) throws SerialPortException{
        if (doConnect(port))

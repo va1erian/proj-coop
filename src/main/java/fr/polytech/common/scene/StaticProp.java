@@ -31,6 +31,7 @@ public class StaticProp extends Actor {
 
     @Override
     public void think(float dt) {
+        //Do nothing
     }
     
     

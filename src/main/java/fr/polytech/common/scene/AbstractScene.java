@@ -26,7 +26,7 @@ import java.util.List;
 public abstract class AbstractScene {
 
     protected final Positionnable light = new Position();
-    protected final List<Prop> props  = new ArrayList<>();
+    protected final List<Object3D> props  = new ArrayList<>();
     
     public abstract void initResources() throws Exception;
     
@@ -36,7 +36,7 @@ public abstract class AbstractScene {
         
     }
     
-    public Iterable<Prop> props() {
+    public Iterable<Object3D> props() {
         return props;
     }
     

@@ -16,7 +16,6 @@
  */
 package fr.polytech.common.model;
 
-import com.hackoeur.jglm.Vec3;
 import java.nio.FloatBuffer;
 
 /**

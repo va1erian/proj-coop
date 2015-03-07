@@ -37,10 +37,9 @@ public class VibratingPiece extends Actor {
     @Override
     public void think(float dt) {
         counter += 25 * dt;
-        angle = Math.cos(counter) * 0.05;
+        angle = Math.cos(counter) * 0.08;
         
         setDir(new Vec3((float) angle, 0, 0));
-        System.out.println(angle);
     }
     
 }

@@ -16,6 +16,7 @@
  */
 package fr.polytech.drone;
 
+import com.hackoeur.jglm.Mat3;
 import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.scene.Actor;
@@ -31,9 +32,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class Drone extends Actor implements Observer {
 
+    final private static float MAX_MOV_SPEED = 5.0f; 
+    final private static float MOV_FRICTION  = 0.5f;
+    
     final private Queue<DroneMessage> messageQueue = new ConcurrentLinkedQueue<>();
     
-    private Vec3 momentum = Vec3.VEC3_ZERO;
+    
+    private float momX, momY, momZ;
     
     public Drone(Model model) {
         super(model, new Vec3(0.4f, 0.6f, 0.9f));
@@ -42,6 +47,11 @@ public class Drone extends Actor implements Observer {
     @Override
     public void think(float dt) {
         processMessage(messageQueue.poll());
+        setPos(getPos().add(new Vec3(momX * dt, momY * dt, momZ * dt)));
+        
+        momX *= MOV_FRICTION * dt;
+        momY *= MOV_FRICTION * dt;
+        momZ *= MOV_FRICTION * dt;
     }
 
     @Override
@@ -55,13 +65,15 @@ public class Drone extends Actor implements Observer {
     private void processMessage(DroneMessage msg) {
         if(msg == null) return;
         
+        float force = arg2f(msg.value) * MAX_MOV_SPEED;
+        
         switch(msg.id) {
             case ALTITUDE:
+                momY += force;
                 
             break;
                 
             case LACET:
-                
             break;
                 
             case ROULIS:
@@ -69,9 +81,15 @@ public class Drone extends Actor implements Observer {
             break;
                 
             case TANGAGE:
+                momX += force;
             break;
-            
         }
+        
+        
     }
     
+    private static float arg2f(int b) {
+        b -= 15;
+        return b * (1 / 7.0f);
+    }
 }

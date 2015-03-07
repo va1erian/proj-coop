@@ -12,19 +12,18 @@ out vec3 outputColor;
 
 void main(){
     vec3 lightColor = vec3(0.7,0.7,0.7);
-    float lightPow = 50.0f;
+    float lightPow = 40.0f;
 
    // Material properties
     vec3 matDiffuseColor = diffuse.rgb;
     vec3 matAmbientColor = vec3(0.2,0.2,0.2) * matDiffuseColor;
-    vec3 matSpecularColor = vec3(0.4,0.4,0.4);
+    vec3 matSpecularColor = vec3(0.8,0.8,0.8);
 
     // Distance to the light
     float distance = length( lightPosWorldspace - positionWorldspace );
 
     // Normal of the computed fragment, in camera space
     vec3 n = normalize( normalCameraspace );
-    //vec3 n = normalize(vec3(0.7, 1.0, 0.5));
     // Direction of the light (from the fragment to the light)
     vec3 l = normalize( lightDirCameraspace );
     // Cosine of the angle between the normal and the light direction,
@@ -48,7 +47,7 @@ void main(){
     // Ambient : simulates indirect lighting
     matAmbientColor +
     // Diffuse : "color" of the object
-    matDiffuseColor * lightColor * lightPow * cosTheta / (distance*distance)
+    matDiffuseColor * lightColor * lightPow * cosTheta / (distance * distance)
     // Specular : reflective highlight, like a mirror
     + matSpecularColor * lightColor * lightPow * pow(cosAlpha,5) / (distance*distance);
 

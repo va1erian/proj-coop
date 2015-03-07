@@ -16,7 +16,6 @@
  */
 package fr.polytech.drone;
 
-import com.jogamp.opengl.util.FPSAnimator;
 import fr.polytech.common.gui.Dialogframe;
 import fr.polytech.common.gui.Mainframe;
 import fr.polytech.common.scene.AbstractScene;
@@ -32,7 +31,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLJPanel;
 import javax.swing.JFrame;
 import jssc.SerialPortException;
 
@@ -104,17 +102,12 @@ public class EntryPoint extends Observable{
             
             GLProfile glp = GLProfile.getDefault();
             GLCapabilities caps = new GLCapabilities(glp);
-            GLJPanel view3d = new GLJPanel(caps);
             
-            view3d.setVisible(true);
-            view3d.addGLEventListener(view);
-            FPSAnimator animator = new FPSAnimator(view3d, 60);
-            animator.start();
+
             
             dialog = new Dialogframe();
-            dialog.setPnlView(view3d);
+            dialog.initSceneManager(view);
             dialog.setLocationRelativeTo(null);
-            view3d.setSize(dialog.get3DviewDimension());
             dialog.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
                         try {

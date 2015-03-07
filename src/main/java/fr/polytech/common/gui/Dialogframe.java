@@ -16,10 +16,11 @@
  */
 package fr.polytech.common.gui;
 
+import com.jogamp.opengl.util.Animator;
+import com.jogamp.opengl.util.FPSAnimator;
+import fr.polytech.common.scene.SceneManager;
 import fr.polytech.drone.EntryPoint;
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import javax.media.opengl.awt.GLJPanel;
 
 /**
  *
@@ -27,11 +28,13 @@ import javax.media.opengl.awt.GLJPanel;
  */
 public class Dialogframe extends javax.swing.JDialog {
 
+    private final FPSAnimator animator;
     /**
      * Creates new form Dialogframe
      */
     public Dialogframe() {
         initComponents();
+        animator = new FPSAnimator(sceneView, 60);
         setVisible(true);
     }
 
@@ -44,41 +47,25 @@ public class Dialogframe extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlView = new javax.swing.JPanel();
         pnlGraph = new javax.swing.JPanel();
         btnDeconnexion = new javax.swing.JButton();
+        sceneView = new javax.media.opengl.awt.GLJPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("View");
-
-        pnlView.setToolTipText("");
-        pnlView.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout pnlViewLayout = new javax.swing.GroupLayout(pnlView);
-        pnlView.setLayout(pnlViewLayout);
-        pnlViewLayout.setHorizontalGroup(
-            pnlViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlViewLayout.setVerticalGroup(
-            pnlViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(pnlView, java.awt.BorderLayout.PAGE_START);
 
         javax.swing.GroupLayout pnlGraphLayout = new javax.swing.GroupLayout(pnlGraph);
         pnlGraph.setLayout(pnlGraphLayout);
         pnlGraphLayout.setHorizontalGroup(
             pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlGraphLayout.setVerticalGroup(
             pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 138, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        getContentPane().add(pnlGraph, java.awt.BorderLayout.CENTER);
+        getContentPane().add(pnlGraph, java.awt.BorderLayout.PAGE_END);
 
         btnDeconnexion.setText("Deconnexion");
         btnDeconnexion.addActionListener(new java.awt.event.ActionListener() {
@@ -87,6 +74,19 @@ public class Dialogframe extends javax.swing.JDialog {
             }
         });
         getContentPane().add(btnDeconnexion, java.awt.BorderLayout.PAGE_END);
+
+        javax.swing.GroupLayout sceneViewLayout = new javax.swing.GroupLayout(sceneView);
+        sceneView.setLayout(sceneViewLayout);
+        sceneViewLayout.setHorizontalGroup(
+            sceneViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 541, Short.MAX_VALUE)
+        );
+        sceneViewLayout.setVerticalGroup(
+            sceneViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 490, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(sceneView, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -130,22 +130,16 @@ public class Dialogframe extends javax.swing.JDialog {
         });
     }
     
-    public void setPnlView(GLJPanel pnl){
-//        setContentPane(pnl);
-        pnlView.add(pnl, BorderLayout.CENTER);
-//        pnlView = pnl;
-//        pnlView.repaint();
-//        pnlView.validate();
-        pnlView.setVisible(true);
+    public void initSceneManager(SceneManager manager){
+        sceneView.addGLEventListener(manager);
+        sceneView.setAnimator(animator);
+        animator.start();
     }
     
-    public Dimension get3DviewDimension(){
-        return pnlView.getSize();
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeconnexion;
     private javax.swing.JPanel pnlGraph;
-    private javax.swing.JPanel pnlView;
+    private javax.media.opengl.awt.GLJPanel sceneView;
     // End of variables declaration//GEN-END:variables
 }

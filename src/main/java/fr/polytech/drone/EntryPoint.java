@@ -63,12 +63,14 @@ public class EntryPoint extends Observable{
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 mainframe = new Mainframe();
+                mainframe.setLocationRelativeTo(null);
                 mainframe.setVisible(true);
                 mainframe.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
                         try {
                             System.out.println("Windows closing...");
-                            driver.close();
+                            if (driver != null)
+                                driver.close();
                             System.exit(0);
                         } catch (SerialPortException ex) {
                             Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,7 +97,6 @@ public class EntryPoint extends Observable{
         try{
             scene = (project == Project.DRONE) ? new DroneScene() : new VibrationScene();
             view = new SceneManager(scene);
-            
             driver = (project == Project.DRONE)?
                         new DroneDriver(port):new PlaqueVibranteDriver(port);
             
@@ -103,9 +104,7 @@ public class EntryPoint extends Observable{
             
             GLProfile glp = GLProfile.getDefault();
             GLCapabilities caps = new GLCapabilities(glp);
-
             GLJPanel view3d = new GLJPanel(caps);
-            
             
             view3d.setVisible(true);
             view3d.addGLEventListener(view);
@@ -114,6 +113,7 @@ public class EntryPoint extends Observable{
             
             dialog = new Dialogframe();
             dialog.setPnlView(view3d);
+            dialog.setLocationRelativeTo(null);
             view3d.setSize(dialog.get3DviewDimension());
             dialog.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
@@ -137,7 +137,19 @@ public class EntryPoint extends Observable{
     }
     
     
-    
+     public static void deconnexionAndDisplayMenu(){
+        try {
+            System.out.println("Deconnexion...");
+            driver.close();
+            driver = null;
+            dialog.dispose();
+            mainframe.setVisible(true);
+            mainframe.setLocationRelativeTo(null);
+            
+        } catch (SerialPortException ex) {
+            Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     }
 
    
 }

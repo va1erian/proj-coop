@@ -16,6 +16,7 @@
  */
 package fr.polytech.common.gui;
 
+import fr.polytech.drone.EntryPoint;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.media.opengl.awt.GLJPanel;
@@ -43,15 +44,12 @@ public class Dialogframe extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnDeconnexion = new javax.swing.JButton();
         pnlView = new javax.swing.JPanel();
         pnlGraph = new javax.swing.JPanel();
+        btnDeconnexion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("View");
-        setResizable(false);
-
-        btnDeconnexion.setText("Deconnexion");
 
         pnlView.setToolTipText("");
         pnlView.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -67,41 +65,35 @@ public class Dialogframe extends javax.swing.JDialog {
             .addGap(0, 352, Short.MAX_VALUE)
         );
 
+        getContentPane().add(pnlView, java.awt.BorderLayout.PAGE_START);
+
         javax.swing.GroupLayout pnlGraphLayout = new javax.swing.GroupLayout(pnlGraph);
         pnlGraph.setLayout(pnlGraphLayout);
         pnlGraphLayout.setHorizontalGroup(
             pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 541, Short.MAX_VALUE)
         );
         pnlGraphLayout.setVerticalGroup(
             pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 138, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlView, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(436, Short.MAX_VALUE)
-                .addComponent(btnDeconnexion)
-                .addContainerGap())
-            .addComponent(pnlGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(pnlView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlGraph, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnDeconnexion)
-                .addContainerGap())
-        );
+        getContentPane().add(pnlGraph, java.awt.BorderLayout.CENTER);
+
+        btnDeconnexion.setText("Deconnexion");
+        btnDeconnexion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeconnexionActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnDeconnexion, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDeconnexionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeconnexionActionPerformed
+        EntryPoint.deconnexionAndDisplayMenu();
+    }//GEN-LAST:event_btnDeconnexionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,6 +133,9 @@ public class Dialogframe extends javax.swing.JDialog {
     public void setPnlView(GLJPanel pnl){
 //        setContentPane(pnl);
         pnlView.add(pnl, BorderLayout.CENTER);
+//        pnlView = pnl;
+//        pnlView.repaint();
+//        pnlView.validate();
         pnlView.setVisible(true);
     }
     

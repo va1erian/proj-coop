@@ -21,5 +21,7 @@ public abstract class Driver extends Observable{
     public abstract boolean doConnect(String port) throws SerialPortException;
     
     public abstract void close() throws SerialPortException;
+    
+    
 
 }

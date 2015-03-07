@@ -22,8 +22,8 @@ import fr.polytech.common.gui.Mainframe;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.SceneManager;
 import fr.polytech.drivers.Driver;
-import fr.polytech.drivers.PlaqueVibranteDriver;
-import fr.polytech.drivers.drone.DroneDriver;
+import fr.polytech.drivers.TestPlaqueVibranteDriver;
+import fr.polytech.drivers.drone.TestDroneDriver;
 import fr.polytech.vibration.VibrationScene;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -97,8 +97,18 @@ public class EntryPoint extends Observable{
         try{
             scene = (project == Project.DRONE) ? new DroneScene() : new VibrationScene();
             view = new SceneManager(scene);
+            
+            // TODO : en test...
+//            driver = (project == Project.DRONE)?
+//                        new DroneDriver():new PlaqueVibranteDriver();
+            
             driver = (project == Project.DRONE)?
-                        new DroneDriver(port):new PlaqueVibranteDriver(port);
+                        new TestDroneDriver():new TestPlaqueVibranteDriver();
+            
+            if (driver.doConnect(port))
+                System.out.println(driver+"> Now connected to the device on port "+port);
+            else
+                System.err.println(driver+"> Fail to connect to the device on port"+port);
             
             mainframe.setVisible(false);
             

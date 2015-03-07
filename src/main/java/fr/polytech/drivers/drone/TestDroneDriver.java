@@ -14,8 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.drivers;
+package fr.polytech.drivers.drone;
 
+import fr.polytech.drivers.Driver;
+import static fr.polytech.drivers.Driver.serialPort;
+import fr.polytech.drivers.TestPlaqueVibranteDriver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jssc.SerialPortException;
@@ -24,58 +27,49 @@ import jssc.SerialPortException;
  *
  * @author Cedric
  */
-public class TestPlaqueVibranteDriver extends Driver{
+public class TestDroneDriver extends Driver{
+    
+    DroneThread droneThread;
 
-    PlaqueThread plaqueThread;
-
-    public TestPlaqueVibranteDriver() {
-        plaqueThread = new PlaqueThread();
+    public TestDroneDriver() {
+        droneThread = new DroneThread();
     }
     
     @Override
     public boolean doConnect(String port) throws SerialPortException {
-        plaqueThread.start();
+        droneThread.start();
         return true;
     }
 
     @Override
     public void close() throws SerialPortException {
-        plaqueThread.interrupt();
+        droneThread.interrupt();
     }
     
     @Override
     public String toString(){
-        return "TestPlaqueVibranteDriver ";
+        return "TestDroneDriver ";
     }
     
-    public class PlaqueThread extends Thread{
+    public class DroneThread extends Thread{
         public void run() {
             
             while(true){
                 try {
-                    for(int i = 127; i<255;i+=4){
-                            System.out.println("message -> "+i);
-                            Byte msg = (byte) i;
-                            setChanged();
-                            notifyObservers(msg);
-                            Thread.sleep(100);
-                    }
-                    for(int i = 255; i>0;i-=4){
-                        System.out.println("message -> "+i);
-                        Byte msg = (byte) i;
+                    for(int i = 1; i<=4;i++){
+                        byte buffer[] = {   (byte)i, 
+                                            (byte) ((int)(Math.random() * 15))
+                                        };
+                        
+                        DroneMessage msg = new DroneMessage(buffer);
+                        System.out.println("message -> "+buffer[0]+"   "+buffer[1]);
                         setChanged();
                         notifyObservers(msg);
-                        Thread.sleep(100);
+                        sleep(100);
                     }
-                    for(int i = 0; i<127;i+=4){
-                        System.out.println("message -> "+i);
-                        Byte msg = (byte) i;
-                        setChanged();
-                        notifyObservers(msg);
-                        Thread.sleep(100);
-                    }
+                    
                 } catch (InterruptedException ex) {
-                    return;
+                     return;
                 }
             }
                 

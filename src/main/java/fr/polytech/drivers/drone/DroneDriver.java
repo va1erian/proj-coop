@@ -18,11 +18,7 @@ import jssc.SerialPortException;
  */
 public class DroneDriver extends Driver{
     
-    public DroneDriver(String port) throws SerialPortException{
-        if (doConnect(port))
-        System.out.println("DroneDriver> Now connected to the device on port "+port);
-       else
-            System.err.println("DroneDriver> Fail to connect to the device on port"+port);
+    public DroneDriver() throws SerialPortException{
     }
     
     @Override
@@ -80,8 +76,10 @@ public class DroneDriver extends Driver{
         }
     };
     
-    
-    
+    @Override
+    public String toString(){
+        return "DroneDriver ";
+    }
 }
 
 

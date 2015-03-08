@@ -18,7 +18,7 @@ package fr.polytech.drivers.drone;
 
 import fr.polytech.drivers.Driver;
 import static fr.polytech.drivers.Driver.serialPort;
-import fr.polytech.drivers.TestPlaqueVibranteDriver;
+import fr.polytech.drivers.vibration.TestPlaqueVibranteDriver;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jssc.SerialPortException;

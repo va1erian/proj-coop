@@ -22,7 +22,6 @@ import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.Object3D;
-import glsl.GLSLProgramObject;
 import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.Map;

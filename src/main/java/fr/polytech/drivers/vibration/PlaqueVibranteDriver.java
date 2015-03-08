@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 
-package fr.polytech.drivers;
+package fr.polytech.drivers.vibration;
 
+import fr.polytech.drivers.Driver;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;

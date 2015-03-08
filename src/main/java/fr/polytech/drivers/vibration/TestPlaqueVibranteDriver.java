@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.drivers;
+package fr.polytech.drivers.vibration;
 
+import fr.polytech.drivers.Driver;
 import jssc.SerialPortException;
 
 /**

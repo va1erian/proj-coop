@@ -54,7 +54,7 @@ public class SceneManager implements GLEventListener,  MouseMotionListener {
         glad.setAutoSwapBufferMode(false);
 
         renderer = new Renderer(gl3);
-        
+        renderer.setViewportRatio(glad.getSurfaceWidth() / glad.getSurfaceHeight());
         System.out.println("Scene init");
         try {
             scene.initResources();
@@ -68,7 +68,6 @@ public class SceneManager implements GLEventListener,  MouseMotionListener {
 
     @Override
     public void dispose(GLAutoDrawable glad) {
-        
     }
 
     @Override
@@ -87,7 +86,7 @@ public class SceneManager implements GLEventListener,  MouseMotionListener {
     
     @Override
     public void reshape(GLAutoDrawable glad, int i, int i1, int i2, int i3) {
-
+        renderer.setViewportRatio(i2 / i3);
     }
    
     

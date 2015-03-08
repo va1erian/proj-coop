@@ -14,26 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.drone;
+package fr.polytech.common.gui;
 
-import fr.polytech.common.gui.Dialogframe;
-import fr.polytech.common.gui.Mainframe;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.SceneManager;
 import fr.polytech.drivers.Driver;
 import fr.polytech.drivers.TestPlaqueVibranteDriver;
 import fr.polytech.drivers.VibratingPieceGraph;
 import fr.polytech.drivers.drone.TestDroneDriver;
+import fr.polytech.drone.DroneScene;
 import fr.polytech.vibration.VibrationScene;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLProfile;
+import javax.media.opengl.GLException;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import jssc.SerialPortException;
 
 /**
@@ -47,8 +44,8 @@ public class EntryPoint extends Observable{
     
     
     /* GUI Frames */
-    private static JFrame mainframe;
-    private static Dialogframe dialog;
+    private static ConfigDialog mainframe;
+    private static MainFrame dialog;
     
      public static enum Project {
         DRONE,
@@ -60,29 +57,28 @@ public class EntryPoint extends Observable{
      
     public static void main(String[] args) {
        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                mainframe = new Mainframe();
-                mainframe.setLocationRelativeTo(null);
-                mainframe.setVisible(true);
-                mainframe.addWindowListener(new WindowAdapter() {
-                    public void windowClosing(WindowEvent e) {
-                        try {
-                            System.out.println("Windows closing...");
-                            if (driver != null)
-                                driver.close();
-                            System.exit(0);
-                        } catch (SerialPortException ex) {
-                            Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                    
-                    public void windowDestroyNotify(WindowEvent we) {
+        java.awt.EventQueue.invokeLater(() -> {
+            mainframe = new ConfigDialog();
+            mainframe.setLocationRelativeTo(null);
+            mainframe.setVisible(true);
+            mainframe.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    try {
+                        System.out.println("Windows closing...");
+                        if (driver != null)
+                            driver.close();
                         System.exit(0);
-                    }  
+                    } catch (SerialPortException ex) {  
+                        Logger.getLogger(EntryPoint.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
                 
-                });
-            }
+                public void windowDestroyNotify(WindowEvent we) {
+                    System.exit(0);
+                }
+                
+            });
         });
          
         
@@ -114,10 +110,9 @@ public class EntryPoint extends Observable{
             
             mainframe.setVisible(false);
             
-            GLProfile glp = GLProfile.getDefault();
-            GLCapabilities caps = new GLCapabilities(glp);
+
             
-            dialog = new Dialogframe();
+            dialog = new MainFrame();
             dialog.initSceneManager(view);
             dialog.setLocationRelativeTo(null);
             
@@ -129,6 +124,7 @@ public class EntryPoint extends Observable{
             }
             
             dialog.addWindowListener(new WindowAdapter() {
+                    @Override
                     public void windowClosing(WindowEvent e) {
                         try {
                             System.out.println("Windows closing...");
@@ -144,9 +140,8 @@ public class EntryPoint extends Observable{
                     }  
                 });
             
-        } catch (Exception e){
+        } catch (SerialPortException | GLException e){
             System.err.println("EntryPoint > displayProject > " +e.getMessage());
-            e.printStackTrace();
         }
     }
     

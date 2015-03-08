@@ -24,10 +24,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JPanel;
-import jssc.SerialPortException;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -41,23 +38,7 @@ public class VibratingPieceGraph extends JPanel implements Observer{
 
     
     static TimeSeries ts = new TimeSeries("", Millisecond.class);
-    
-    public static void main(String[] args) throws InterruptedException {
-         try {
-             Driver driver = new TestPlaqueVibranteDriver();
-             
-             if (driver.doConnect("COM3"))
-                 System.out.println(driver+"> Now connected to the device on port ");
-             else
-                 System.err.println(driver+"> Fail to connect to the device on port");
-             VibratingPieceGraph graph = new VibratingPieceGraph();
-             driver.addObserver(graph);
-             
-             
-         } catch (SerialPortException ex) {
-             Logger.getLogger(VibratingPieceGraph.class.getName()).log(Level.SEVERE, null, ex);
-         }
-    }
+ 
 
     
     public VibratingPieceGraph(){

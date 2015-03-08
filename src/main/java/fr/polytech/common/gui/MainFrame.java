@@ -18,22 +18,27 @@ package fr.polytech.common.gui;
 
 import com.jogamp.opengl.util.FPSAnimator;
 import fr.polytech.common.scene.SceneManager;
-import fr.polytech.drone.EntryPoint;
 import java.awt.BorderLayout;
+import javax.media.opengl.GLCapabilities;
+import javax.media.opengl.GLProfile;
+import javax.media.opengl.awt.GLJPanel;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 /**
  *
  * @author Cedric
  */
-public class Dialogframe extends javax.swing.JDialog {
+public class MainFrame extends javax.swing.JFrame {
 
+    GLProfile glp = GLProfile.getMaxProgrammable(true);
+    GLCapabilities caps = new GLCapabilities(glp);
     private final FPSAnimator animator;
     /**
-     * Creates new form Dialogframe
+     * Creates new form MainFrame
      */
-    public Dialogframe() {
+    public MainFrame() {
+        caps.setSampleBuffers(true);
+        caps.setNumSamples(4);
         initComponents();
         animator = new FPSAnimator(sceneView, 60);
         setVisible(true);
@@ -48,7 +53,7 @@ public class Dialogframe extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        sceneView = new javax.media.opengl.awt.GLJPanel();
+        sceneView = new GLJPanel(caps);
         pnlBas = new javax.swing.JPanel();
         btnDeconnexion = new javax.swing.JButton();
         pnlGraph = new javax.swing.JPanel();
@@ -91,41 +96,6 @@ public class Dialogframe extends javax.swing.JDialog {
         EntryPoint.deconnexionAndDisplayMenu();
     }//GEN-LAST:event_btnDeconnexionActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dialogframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dialogframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dialogframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dialogframe.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Dialogframe().setVisible(true);
-            }
-        });
-    }
-    
     public void initSceneManager(SceneManager manager){
         sceneView.addGLEventListener(manager);
         sceneView.setAnimator(animator);

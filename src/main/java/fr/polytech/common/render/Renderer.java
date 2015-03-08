@@ -38,11 +38,12 @@ public class Renderer {
     private final GL3 gl3;
     private final Map<Model, Integer> modelVertBuf   = new HashMap<>();
     private final Map<Model, Integer> modelNormalBuf = new HashMap<>();
-    private final Mat4 projection = Matrices.perspective(65.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
     private final int[] matBufferId = new int[3];
     private final int[] lightBufferId = new int[1];
     private final int[] colorBufferId = new int[1];
+   
     private GLSLProgramObject basicShader;
+    private float viewportRatio;
     private Mat4 view;
     
     
@@ -171,11 +172,22 @@ public class Renderer {
     private void prepareMVP(Object3D obj) {
         Mat4 model = getModelMat(obj);
         
-        Mat4 mvp = projection.multiply(view.multiply(model));
+        Mat4 mvp = getProjectionMat().multiply(view.multiply(model));
         
         gl3.glUniformMatrix4fv(matBufferId[0], 1, false, mvp.getBuffer());
         gl3.glUniformMatrix4fv(matBufferId[1], 1, false, view.getBuffer());
         gl3.glUniformMatrix4fv(matBufferId[2], 1, false, model.getBuffer());
+    }
+    
+    private Mat4 getProjectionMat() {
+        return Matrices.perspective(70.0f, viewportRatio, 0.5f, 1000.0f);
+    }
+
+    /**
+     * @param viewportRatio the viewportRatio to set
+     */
+    public void setViewportRatio(float viewportRatio) {
+        this.viewportRatio = viewportRatio;
     }
 
 }

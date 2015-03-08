@@ -22,6 +22,7 @@ import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.SceneManager;
 import fr.polytech.drivers.Driver;
 import fr.polytech.drivers.TestPlaqueVibranteDriver;
+import fr.polytech.drivers.VibratingPieceGraph;
 import fr.polytech.drivers.drone.TestDroneDriver;
 import fr.polytech.vibration.VibrationScene;
 import java.awt.event.WindowAdapter;
@@ -32,6 +33,7 @@ import java.util.logging.Logger;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLProfile;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import jssc.SerialPortException;
 
 /**
@@ -115,11 +117,17 @@ public class EntryPoint extends Observable{
             GLProfile glp = GLProfile.getDefault();
             GLCapabilities caps = new GLCapabilities(glp);
             
-
-            
             dialog = new Dialogframe();
             dialog.initSceneManager(view);
             dialog.setLocationRelativeTo(null);
+            
+            if (project == Project.PLAQUE_VIBRANTE){
+                System.out.println("Create Graph...");
+                VibratingPieceGraph graph = new VibratingPieceGraph();
+                driver.addObserver(graph);
+                dialog.initGraph(graph);
+            }
+            
             dialog.addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
                         try {

@@ -44,8 +44,8 @@ public class EntryPoint extends Observable{
     
     
     /* GUI Frames */
-    private static ConfigDialog mainframe;
-    private static MainFrame dialog;
+    private static ConfigView mainframe;
+    private static MainView dialog;
     
      public static enum Project {
         DRONE,
@@ -58,7 +58,7 @@ public class EntryPoint extends Observable{
     public static void main(String[] args) {
        
         java.awt.EventQueue.invokeLater(() -> {
-            mainframe = new ConfigDialog();
+            mainframe = new ConfigView();
             mainframe.setLocationRelativeTo(null);
             mainframe.setVisible(true);
             mainframe.addWindowListener(new WindowAdapter() {
@@ -112,7 +112,7 @@ public class EntryPoint extends Observable{
             
 
             
-            dialog = new MainFrame();
+            dialog = new MainView();
             dialog.initSceneManager(view);
             dialog.setLocationRelativeTo(null);
             

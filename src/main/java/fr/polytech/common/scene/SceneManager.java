@@ -92,7 +92,7 @@ public class SceneManager implements GLEventListener,  MouseMotionListener {
     
     private Mat4 getViewMat(Vec3 focusPoint) {
         return Matrices.lookAt(
-                new Vec3(camX, camY, camZ), 
+                new Vec3(focusPoint.getX() + camX, focusPoint.getY() + camY, focusPoint.getZ() + camZ), 
                 focusPoint, 
                 new Vec3(0,1,0));
         
@@ -117,6 +117,8 @@ public class SceneManager implements GLEventListener,  MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        lastMouseX = e.getX();
+        lastMouseY = e.getY();
     }
 }
 

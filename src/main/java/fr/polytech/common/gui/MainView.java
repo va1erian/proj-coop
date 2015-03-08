@@ -28,17 +28,19 @@ import javax.swing.JComponent;
  *
  * @author Cedric
  */
-public class MainFrame extends javax.swing.JFrame {
+public class MainView extends javax.swing.JFrame {
 
-    GLProfile glp = GLProfile.getMaxProgrammable(true);
-    GLCapabilities caps = new GLCapabilities(glp);
+    private final GLProfile glp = GLProfile.getMaxProgrammableCore(true);
+    private final GLCapabilities caps; 
     private final FPSAnimator animator;
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public MainView() {
+        caps = new GLCapabilities(glp);
         caps.setSampleBuffers(true);
         caps.setNumSamples(4);
+        
         initComponents();
         animator = new FPSAnimator(sceneView, 60);
         setVisible(true);
@@ -96,6 +98,7 @@ public class MainFrame extends javax.swing.JFrame {
         EntryPoint.deconnexionAndDisplayMenu();
     }//GEN-LAST:event_btnDeconnexionActionPerformed
 
+    
     public void initSceneManager(SceneManager manager){
         sceneView.addGLEventListener(manager);
         sceneView.setAnimator(animator);
@@ -105,7 +108,6 @@ public class MainFrame extends javax.swing.JFrame {
     
     public void initGraph(JComponent panel){
         pnlGraph.add(panel, BorderLayout.SOUTH);
-
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

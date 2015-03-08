@@ -24,12 +24,12 @@ import jssc.SerialPortList;
  *
  * @author Cedric
  */
-public class ConfigDialog extends javax.swing.JDialog {
+public class ConfigView extends javax.swing.JDialog {
 
     /**
      * Creates new form Mainframe
      */
-    public ConfigDialog() {
+    public ConfigView() {
         initComponents();
     }
 

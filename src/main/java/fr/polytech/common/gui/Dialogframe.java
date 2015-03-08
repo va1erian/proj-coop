@@ -19,6 +19,9 @@ package fr.polytech.common.gui;
 import com.jogamp.opengl.util.FPSAnimator;
 import fr.polytech.common.scene.SceneManager;
 import fr.polytech.drone.EntryPoint;
+import java.awt.BorderLayout;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  *
@@ -45,25 +48,28 @@ public class Dialogframe extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlGraph = new javax.swing.JPanel();
-        btnDeconnexion = new javax.swing.JButton();
         sceneView = new javax.media.opengl.awt.GLJPanel();
+        pnlBas = new javax.swing.JPanel();
+        btnDeconnexion = new javax.swing.JButton();
+        pnlGraph = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("View");
 
-        javax.swing.GroupLayout pnlGraphLayout = new javax.swing.GroupLayout(pnlGraph);
-        pnlGraph.setLayout(pnlGraphLayout);
-        pnlGraphLayout.setHorizontalGroup(
-            pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout sceneViewLayout = new javax.swing.GroupLayout(sceneView);
+        sceneView.setLayout(sceneViewLayout);
+        sceneViewLayout.setHorizontalGroup(
+            sceneViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 561, Short.MAX_VALUE)
         );
-        pnlGraphLayout.setVerticalGroup(
-            pnlGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        sceneViewLayout.setVerticalGroup(
+            sceneViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 461, Short.MAX_VALUE)
         );
 
-        getContentPane().add(pnlGraph, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(sceneView, java.awt.BorderLayout.CENTER);
+
+        pnlBas.setLayout(new java.awt.BorderLayout());
 
         btnDeconnexion.setText("Deconnexion");
         btnDeconnexion.addActionListener(new java.awt.event.ActionListener() {
@@ -71,20 +77,12 @@ public class Dialogframe extends javax.swing.JDialog {
                 btnDeconnexionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnDeconnexion, java.awt.BorderLayout.PAGE_END);
+        pnlBas.add(btnDeconnexion, java.awt.BorderLayout.PAGE_END);
 
-        javax.swing.GroupLayout sceneViewLayout = new javax.swing.GroupLayout(sceneView);
-        sceneView.setLayout(sceneViewLayout);
-        sceneViewLayout.setHorizontalGroup(
-            sceneViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 541, Short.MAX_VALUE)
-        );
-        sceneViewLayout.setVerticalGroup(
-            sceneViewLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
-        );
+        pnlGraph.setLayout(new java.awt.BorderLayout());
+        pnlBas.add(pnlGraph, java.awt.BorderLayout.CENTER);
 
-        getContentPane().add(sceneView, java.awt.BorderLayout.CENTER);
+        getContentPane().add(pnlBas, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -135,9 +133,14 @@ public class Dialogframe extends javax.swing.JDialog {
         animator.start();
     }
     
+    public void initGraph(JComponent panel){
+        pnlGraph.add(panel, BorderLayout.SOUTH);
+
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDeconnexion;
+    private javax.swing.JPanel pnlBas;
     private javax.swing.JPanel pnlGraph;
     private javax.media.opengl.awt.GLJPanel sceneView;
     // End of variables declaration//GEN-END:variables

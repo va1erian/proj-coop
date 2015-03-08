@@ -46,32 +46,29 @@ public class TestPlaqueVibranteDriver extends Driver{
         return "TestPlaqueVibranteDriver ";
     }
     
+    public static byte IntToByte(int nb)
+    {
+        return (byte)(nb & 255);	
+    }
+
+    public static int ByteToInt(byte nb)
+    {
+        return (nb & 255);
+    }
+    
     public class PlaqueThread extends Thread{
         public void run() {
-            
+            Double cpt = 0.0d;
+            Double result;
             while(true){
                 try {
-                    for(int i = 127; i<255;i+=4){
-                            System.out.println("message -> "+i);
-                            Byte msg = (byte) i;
-                            setChanged();
-                            notifyObservers(msg);
-                            Thread.sleep(100);
-                    }
-                    for(int i = 255; i>0;i-=4){
-                        System.out.println("message -> "+i);
-                        Byte msg = (byte) i;
-                        setChanged();
-                        notifyObservers(msg);
-                        Thread.sleep(100);
-                    }
-                    for(int i = 0; i<127;i+=4){
-                        System.out.println("message -> "+i);
-                        Byte msg = (byte) i;
-                        setChanged();
-                        notifyObservers(msg);
-                        Thread.sleep(100);
-                    }
+                    result =(Math.cos(cpt)*127);
+                    cpt+=0.1;
+                    Byte b = IntToByte(((int)Math.round(result)));
+                    setChanged();
+                    notifyObservers(b);
+                    Thread.sleep(20);
+                    System.out.println(result);
                 } catch (InterruptedException ex) {
                     return;
                 }

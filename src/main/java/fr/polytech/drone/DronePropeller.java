@@ -14,17 +14,35 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package fr.polytech.common.scene;
+package fr.polytech.drone;
 
 import com.hackoeur.jglm.Vec3;
+import fr.polytech.common.model.Model;
+import fr.polytech.common.scene.Actor;
 
 /**
  *
  * @author hadrien
  */
-public interface Positionnable {
-    Vec3 getPos();
-    Vec3 getRot();
-    void setPos(Vec3 pos);
-    void setRot(Vec3 rot);
+public class DronePropeller extends Actor {
+
+    
+    private final float ROTATION_SPEED = 10.0f;
+    private float rotation = 0;
+    private boolean inverse;
+    
+    public DronePropeller(Model model, boolean inverse, Actor parent) {
+        super(model, new Vec3(0.5f, 0.5f, 0.5f), parent);
+        
+        this.inverse = inverse;
+    }
+
+    
+    @Override
+    public void think(float dt) {
+        float inv = inverse ? -1 : 1;
+        rotation += ROTATION_SPEED * dt * inv;
+        setRot(new Vec3(rotation, 0, 0));
+    }
+    
 }

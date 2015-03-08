@@ -25,6 +25,8 @@ import fr.polytech.common.model.Model;
  */
 public abstract class Actor extends Position implements Object3D, Thinker {
 
+    
+    protected final Object3D parent;
     protected final Model mdl;
     protected Vec3  rotationCenter = Vec3.VEC3_ZERO;
     protected Vec3 color;
@@ -32,8 +34,14 @@ public abstract class Actor extends Position implements Object3D, Thinker {
     public Actor(Model model, Vec3 color) {
         mdl = model;
         this.color = color;
+        parent = null;
     }
 
+    public Actor(Model model, Vec3 color, Object3D parent) {
+        mdl = model;
+        this.color = color;
+        this.parent = parent;
+    }
     @Override
     public Model getModel() {
         return mdl;
@@ -48,6 +56,12 @@ public abstract class Actor extends Position implements Object3D, Thinker {
     public Vec3 getColor() {
         return color;
     }
+
+    @Override
+    public Object3D getParent() {
+        return parent;
+    }
+    
     
     
     

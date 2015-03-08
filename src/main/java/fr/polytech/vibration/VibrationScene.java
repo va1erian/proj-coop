@@ -33,14 +33,14 @@ public class VibrationScene extends AbstractScene {
     private VibratingPiece movingPart;
     
     public VibrationScene() {
-        light.setPos(new Vec3(2.0f, 9.0f, 0));
+        light = new Vec3(2.0f, 9.0f, 0);
     }
     
     @Override
     public void initResources() throws Exception {
         ModelLoader loader = new BasicOBJLoader();
         
-        Model m = loader.loadModel("/models/vib1_1.obj");
+        Model m = loader.loadModel("/models/vib1_2.obj");
         staticPart = new StaticProp(m, new Vec3(0.4f, 0.6f, 0.9f));
         props.add(staticPart);
         
@@ -53,6 +53,11 @@ public class VibrationScene extends AbstractScene {
     @Override
     public void update(float dt) {
         movingPart.think(dt);
+    }
+
+    @Override
+    public Vec3 getCamFollowPoint() {
+        return Vec3.VEC3_ZERO;
     }
     
 }

@@ -32,7 +32,7 @@ public class Position implements Positionnable {
     }
 
     @Override
-    public Vec3 getDir() {
+    public Vec3 getRot() {
         return dir;
     }
 
@@ -42,7 +42,7 @@ public class Position implements Positionnable {
     }
 
     @Override
-    public void setDir(Vec3 dir) {
+    public void setRot(Vec3 dir) {
         this.dir = dir;
     }
     

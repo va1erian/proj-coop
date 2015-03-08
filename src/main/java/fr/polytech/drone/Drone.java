@@ -31,13 +31,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  */
 public class Drone extends Actor implements Observer {
 
-    final private static float MAX_MOV_SPEED = 10.0f; 
-    final private static float FRICTION_FORCE  = -0.2f;
+    final private static float MAX_MOV_SPEED = 30.0f; 
     
     final private Queue<DroneMessage> messageQueue = new ConcurrentLinkedQueue<>();
-    
-    
-    private float momX, momY, momZ;
+  
+    private float speed, momY, yawMom, rollMom;
+    private double yawAngle;
     
     public Drone(Model model) {
         super(model, new Vec3(0.4f, 0.6f, 0.9f));
@@ -45,16 +44,25 @@ public class Drone extends Actor implements Observer {
 
     @Override
     public void think(float dt) {
-        processMessage(messageQueue.poll());
-        setPos(getPos().add(new Vec3(momX * dt, momY * dt, momZ * dt)));
+        processMessage(messageQueue.poll());        
         
-//        momX += FRICTION_FORCE * dt;
-//        momY += FRICTION_FORCE * dt;
-//        momZ += FRICTION_FORCE * dt;
+        yawAngle += yawMom * dt;
+        float xVel = (float) (Math.sin(yawAngle) * speed * dt);
+        float zVel = (float) (Math.cos(yawAngle) * speed * dt);
         
-       momX *=  0.90;
-       momY *=  0.90;
-       momZ *=  0.90;
+        xVel += (float) (Math.sin(yawAngle + Math.PI/2) * rollMom * dt);
+        zVel += (float) (Math.cos(yawAngle + Math.PI/2) * rollMom * dt);
+        
+        float pitchAngle = (speed / MAX_MOV_SPEED )  / 1.39f;
+        float rollAngle  = (rollMom / MAX_MOV_SPEED) / 1.39f;
+        
+        setPos(getPos().add(new Vec3(xVel, momY * dt, zVel)));
+        setRot(new Vec3((float) yawAngle, pitchAngle, rollAngle));
+        
+        speed   *= 0.95;
+        momY    *= 0.90;
+        yawMom  *= 0.90;
+        rollMom *= 0.90;
     }
 
     @Override
@@ -69,22 +77,21 @@ public class Drone extends Actor implements Observer {
         if(msg == null) return;
         
         float force = arg2f(msg.value) * MAX_MOV_SPEED;
-        System.out.println(force);
         switch(msg.id) {
             case ALTITUDE:
                 momY += force;
-                
             break;
                 
             case LACET:
+                yawMom += force / 2.5;
             break;
                 
             case ROULIS:
-            
+                rollMom += force;
             break;
                 
             case TANGAGE:
-                momX += force;
+                speed += force;
             break;
         }
         

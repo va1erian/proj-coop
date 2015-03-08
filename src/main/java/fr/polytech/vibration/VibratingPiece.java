@@ -26,7 +26,7 @@ import java.util.Observer;
  *
  * @author hadrien
  */ 
-public class VibratingPiece extends Actor implements Observer{
+public class VibratingPiece extends Actor implements Observer {
     
     private double angle = 0;
     private double counter = 0;
@@ -41,7 +41,7 @@ public class VibratingPiece extends Actor implements Observer{
         counter += 25 * dt;
         angle = Math.cos(counter) * 0.08;
         
-        setDir(new Vec3((float) angle, 0, 0));
+        setRot(new Vec3((float) angle, 0, 0));
     }
 
     @Override

@@ -21,7 +21,6 @@ import com.hackoeur.jglm.Matrices;
 import com.hackoeur.jglm.Vec3;
 import fr.polytech.common.model.Model;
 import fr.polytech.common.scene.AbstractScene;
-import fr.polytech.common.scene.Positionnable;
 import fr.polytech.common.scene.Object3D;
 import glsl.GLSLProgramObject;
 import java.nio.IntBuffer;
@@ -102,10 +101,10 @@ public class Renderer {
     }
     
     public void renderProp(AbstractScene scene, Object3D p) {        
-        prepareMVP(gl3, p, p.getRotationCenter());
+        prepareMVP(p);
         
-        Positionnable light = scene.getLight();
-        gl3.glUniform3fv(lightBufferId[0], 1, light.getPos().getBuffer());
+        Vec3 light = scene.getLight();
+        gl3.glUniform3fv(lightBufferId[0], 1, light.getBuffer());
         
         gl3.glUniform3fv(colorBufferId[0], 1, p.getColor().getBuffer());
         Model mdl = p.getModel();
@@ -147,25 +146,30 @@ public class Renderer {
     }
 
     
-    private Mat4 getModelMat(Positionnable pos, Vec3 rotAxis) {
-        Mat4 rotXMatrix = Matrices.rotate(pos.getDir().getX(), new Vec3( 0, 1, 0));
-        Mat4 rotYMatrix = Matrices.rotate(pos.getDir().getY(), new Vec3( 1, 0, 0));
-        Mat4 rotZMatrix = Matrices.rotate(pos.getDir().getZ(), new Vec3( 0, 0, 1));
-
-        //rotMatrix = rotMatrix.translate(rotAxis);
+    private Mat4 getModelMat(Object3D obj) {
         
-        return Mat4.MAT4_IDENTITY
-                .translate(pos.getPos())
-                .translate(rotAxis.getNegated())
+        Mat4 rotXMatrix = Matrices.rotate(obj.getRot().getX(), new Vec3( 0, 1, 0));
+        Mat4 rotYMatrix = Matrices.rotate(obj.getRot().getY(), new Vec3( 1, 0, 0));
+        Mat4 rotZMatrix = Matrices.rotate(obj.getRot().getZ(), new Vec3( 0, 0, 1));        
+        Mat4 parent;
+        if(obj.getParent() == null) {
+            parent = Mat4.MAT4_IDENTITY;
+        } else {
+            parent = getModelMat(obj.getParent());
+        }
+       
+        return parent
+                .translate(obj.getPos())
+                .translate(obj.getRotationCenter().getNegated())
                 .multiply(rotXMatrix)
                 .multiply(rotZMatrix)
                 .multiply(rotYMatrix)
-                .translate(rotAxis);
+                .translate(obj.getRotationCenter());
                 
     }
     
-    private void prepareMVP(GL3 gl3, Positionnable pos, Vec3 rotAxis) {
-        Mat4 model = getModelMat(pos, rotAxis);
+    private void prepareMVP(Object3D obj) {
+        Mat4 model = getModelMat(obj);
         
         Mat4 mvp = projection.multiply(view.multiply(model));
         

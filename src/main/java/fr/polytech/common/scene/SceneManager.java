@@ -20,8 +20,6 @@ import fr.polytech.common.render.Renderer;
 import com.hackoeur.jglm.Mat4;
 import com.hackoeur.jglm.Matrices;
 import com.hackoeur.jglm.Vec3;
-import com.jogamp.newt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import javax.media.opengl.GL3;
@@ -32,12 +30,9 @@ import javax.media.opengl.GLEventListener;
  *
  * @author hadrien
  */
-public class SceneManager implements GLEventListener,  MouseMotionListener {
-
-    private static final float CAM_MOVE_SPEED = 30.0f;
-    
+public class SceneManager implements GLEventListener,  MouseMotionListener {    
+   
     private int lastMouseX, lastMouseY;
-    
     private float camX, camY, camZ;
     private float theta, phi;
     
@@ -84,7 +79,7 @@ public class SceneManager implements GLEventListener,  MouseMotionListener {
         
         scene.update(elapsedTime);
         
-        renderer.setView(getViewMat());
+        renderer.setView(getViewMat(scene.getCamFollowPoint()));
         renderer.renderScene(scene);
         
         glad.swapBuffers();
@@ -96,10 +91,10 @@ public class SceneManager implements GLEventListener,  MouseMotionListener {
     }
    
     
-    private Mat4 getViewMat() {
+    private Mat4 getViewMat(Vec3 focusPoint) {
         return Matrices.lookAt(
                 new Vec3(camX, camY, camZ), 
-                Vec3.VEC3_ZERO, 
+                focusPoint, 
                 new Vec3(0,1,0));
         
     }

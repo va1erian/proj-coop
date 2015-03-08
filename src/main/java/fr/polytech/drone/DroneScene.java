@@ -22,7 +22,7 @@ import fr.polytech.common.model.Model;
 import fr.polytech.common.model.ModelLoader;
 import fr.polytech.common.scene.AbstractScene;
 import fr.polytech.common.scene.StaticProp;
-import java.util.Observable;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -32,19 +32,32 @@ import java.util.Random;
 public class DroneScene extends AbstractScene {
  
     private Drone drone;
-
+    private final DronePropeller[] propellers = new DronePropeller[4];
+    
     public DroneScene() {
-        light.setPos(new Vec3(0.0f, 4.0f, 0));
+        light = new Vec3(0.0f, -3.0f, 0.0f);
     }
     
     @Override
     public void initResources() throws Exception {
         ModelLoader loader = new BasicOBJLoader();
-        Model droneMdl = loader.loadModel("/models/drone.obj");
+        Model droneMdl = loader.loadModel("/models/drone_final.obj");
         
         drone = new Drone(droneMdl);
         eventSource.addObserver(drone);
         props.add(drone);
+        
+        Model propellerMdl = loader.loadModel("/models/helice.obj");
+        for(int i = 0; i < 4; i++) {
+            propellers[i] = new DronePropeller(propellerMdl, i >= 2 , drone);
+        }
+       
+        propellers[0].setPos(new Vec3(-3.15f, 0f, -2f));
+        propellers[1].setPos(new Vec3(3.15f,  0f, 2f));
+        propellers[2].setPos(new Vec3(3.15f,  0f, -2f));
+        propellers[3].setPos(new Vec3(-3.15f, 0f, 2f));
+
+        Collections.addAll(props, propellers);
         
         Model cubeMdl = loader.loadModel("/models/cube2.obj");
         addRandomProps(cubeMdl);
@@ -53,28 +66,41 @@ public class DroneScene extends AbstractScene {
     @Override
     public void update(float dt) {
         drone.think(dt);
+        for(DronePropeller p: propellers) {
+            p.think(dt);
+        }
     }
     
     private void addRandomProps(Model mdl) {
         Random rand = new Random();
         
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 2000; i++) {
             StaticProp d = new StaticProp(mdl, 
                     new Vec3(rand.nextFloat(), rand.nextFloat(), rand.nextFloat()));
             Vec3 random = new Vec3(
                     rand.nextFloat() - 0.5f,
-                    - 0.2f,
-                    rand.nextFloat() - 0.5f).multiply(75.0f);
+                    0,
+                    rand.nextFloat() - 0.5f).multiply(800.0f);
             
             d.setPos(random);
             
             random = new Vec3(
                     rand.nextFloat() - 0.5f,
                     rand.nextFloat() - 0.5f,
-                    rand.nextFloat() - 0.5f).multiply(20.0f);
+                    rand.nextFloat() - 0.5f).multiply(10.0f);
             
-            d.setDir(random);
+            d.setRot(random);
             props.add(d);
         }
+    }
+
+    @Override
+    public Vec3 getCamFollowPoint() {
+        return drone.getPos();
+    }
+
+    @Override
+    public Vec3 getLight() {
+        return drone.getPos().add(light);
     }
 }

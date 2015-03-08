@@ -16,6 +16,7 @@
  */
 package fr.polytech.common.scene;
 
+import com.hackoeur.jglm.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -26,14 +27,15 @@ import java.util.Observable;
  */
 public abstract class AbstractScene {
     
-    protected Observable eventSource;
-    
-    protected final Positionnable light   = new Position();
     protected final List<Object3D> props  = new ArrayList<>();
+    protected Observable eventSource;
+    protected Vec3 light = Vec3.VEC3_ZERO;
     
     public abstract void initResources() throws Exception;
     
     public abstract void update(float dt);
+    
+    public abstract Vec3 getCamFollowPoint();
     
     public void setEventSource(Observable o) {
         this.eventSource = o;
@@ -46,7 +48,7 @@ public abstract class AbstractScene {
     /**
      * @return the light
      */
-    public Positionnable getLight() {
+    public Vec3 getLight() {
         return light;
     }
     
